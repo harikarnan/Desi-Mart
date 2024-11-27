@@ -7,16 +7,14 @@ class User {
     }
 
     public function register($data) {
-        $query = "INSERT INTO users (name, email, password, address) 
-                  VALUES (:name, :email, :password, :address)";
+        $query = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
         $stmt = $this->db->prepare($query);
         $stmt->execute([
             ':name' => $data['name'],
             ':email' => $data['email'],
-            ':password' => password_hash($data['password'], PASSWORD_BCRYPT),
-            ':address' => $data['address']
+            ':password' => password_hash($data['password'], PASSWORD_BCRYPT)
         ]);
-    }
+    }    
 
     public function login($email, $password) {
         $query = "SELECT * FROM users WHERE email = :email";

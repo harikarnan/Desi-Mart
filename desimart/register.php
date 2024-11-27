@@ -10,17 +10,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = htmlspecialchars($_POST['name']);
     $email = htmlspecialchars($_POST['email']);
     $password = htmlspecialchars($_POST['password']);
-    $address = htmlspecialchars($_POST['address']);
 
+    // Register the user
     $userObj->register([
         'name' => $name,
         'email' => $email,
-        'password' => $password,
-        'address' => $address
+        'password' => $password
     ]);
 
     $_SESSION['message'] = "Registration successful. Please log in.";
-    header('Location: login.php');
+    header('Location: login.php'); // Redirect to login page after registration
 }
 ?>
 <?php include 'includes/header.php'; ?>
@@ -28,12 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <form method="POST">
     <label for="name">Name:</label>
     <input type="text" name="name" id="name" required>
+    
     <label for="email">Email:</label>
     <input type="email" name="email" id="email" required>
+    
     <label for="password">Password:</label>
     <input type="password" name="password" id="password" required>
-    <label for="address">Address:</label>
-    <textarea name="address" id="address" required></textarea>
+    
     <button type="submit">Register</button>
 </form>
 <?php include 'includes/footer.php'; ?>

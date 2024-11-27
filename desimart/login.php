@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($user) {
         $_SESSION['user'] = $user;
-        header('Location: index.php');
+        header('Location: index.php'); // Redirect to the homepage after login
     } else {
         $error = "Invalid email or password.";
     }
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include 'includes/header.php'; ?>
 <h1>Login</h1>
 <?php if (isset($error)): ?>
-    <p><?php echo htmlspecialchars($error); ?></p>
+    <p style="color: red;"><?php echo htmlspecialchars($error); ?></p>
 <?php endif; ?>
 <form method="POST">
     <label for="email">Email:</label>
@@ -32,4 +32,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <input type="password" name="password" id="password" required>
     <button type="submit">Login</button>
 </form>
+<p>Don't have an account? <a href="register.php">Register here</a>.</p>
 <?php include 'includes/footer.php'; ?>
