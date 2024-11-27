@@ -3,6 +3,9 @@ class Product {
     private $db;
 
     public function __construct($db) {
+        if (!$db) {
+            throw new Exception("Database connection is not established.");
+        }
         $this->db = $db;
     }
 

@@ -1,9 +1,9 @@
 <?php
 class Database {
-    private $host = "localhost";
-    private $db_name = "desimart";
-    private $username = "root";
-    private $password = "";
+    private $host = "localhost"; // MySQL host
+    private $db_name = "desimart"; // Correct database name
+    private $username = "root"; // Default username for XAMPP
+    private $password = ""; // Default password for XAMPP (empty)
     public $conn;
 
     public function getConnection() {
@@ -12,7 +12,7 @@ class Database {
             $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $exception) {
-            echo "Connection error: " . $exception->getMessage();
+            die("Connection error: " . $exception->getMessage());
         }
         return $this->conn;
     }
