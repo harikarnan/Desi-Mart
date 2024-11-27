@@ -65,12 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Clear the cart after successful checkout
     unset($_SESSION['cart']);
 
-    // After successful order placement
+    // Redirect to success page
     header("Location: success.php?order_id=$order_id");
-    exit();
-
-    // Redirect to invoice generation
-    header("Location: generate_invoice.php?order_id=$order_id");
     exit();
 }
 ?>
