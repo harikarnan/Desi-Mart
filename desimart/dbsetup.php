@@ -27,132 +27,113 @@ $conn->select_db($dbName);
 // Step 2: Create Tables
 
 // Create Users table
-$sqlUsers = "CREATE TABLE IF NOT EXISTS Users (
+$sqlUsers = "CREATE TABLE IF NOT EXISTS users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    address TEXT,
-    phone VARCHAR(15)
+    password VARCHAR(255) NOT NULL
 )";
 if ($conn->query($sqlUsers) === TRUE) {
-    echo "Table 'Users' created successfully.<br>";
+    echo "Table 'users' created successfully.<br>";
 } else {
-    die("Error creating 'Users' table: " . $conn->error);
+    die("Error creating 'users' table: " . $conn->error);
 }
 
 // Create Products table
-$sqlProducts = "CREATE TABLE IF NOT EXISTS Products (
+$sqlProducts = "CREATE TABLE IF NOT EXISTS products (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    category VARCHAR(50) NOT NULL,
+    category_id INT NOT NULL,
     price FLOAT NOT NULL,
     stock_quantity INT NOT NULL,
-    image_path VARCHAR(255)
+    image_path VARCHAR(255),
+    description TEXT
 )";
 if ($conn->query($sqlProducts) === TRUE) {
-    echo "Table 'Products' created successfully.<br>";
+    echo "Table 'products' created successfully.<br>";
 } else {
-    die("Error creating 'Products' table: " . $conn->error);
+    die("Error creating 'products' table: " . $conn->error);
 }
 
-// Create Cart table
-$sqlCart = "CREATE TABLE IF NOT EXISTS Cart (
-    cart_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    product_id INT NOT NULL,
-    quantity INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES Products(product_id) ON DELETE CASCADE
+// Create Categories table
+$sqlCategories = "CREATE TABLE IF NOT EXISTS categories (
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
 )";
-if ($conn->query($sqlCart) === TRUE) {
-    echo "Table 'Cart' created successfully.<br>";
+if ($conn->query($sqlCategories) === TRUE) {
+    echo "Table 'categories' created successfully.<br>";
 } else {
-    die("Error creating 'Cart' table: " . $conn->error);
+    die("Error creating 'categories' table: " . $conn->error);
 }
 
 // Create Orders table
-$sqlOrders = "CREATE TABLE IF NOT EXISTS Orders (
+$sqlOrders = "CREATE TABLE IF NOT EXISTS orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     order_date DATETIME NOT NULL,
     total_amount FLOAT NOT NULL,
+    address TEXT NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    mobile_number VARCHAR(15) NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    province VARCHAR(50) NOT NULL,
+    country VARCHAR(50) NOT NULL,
+    pincode VARCHAR(10) NOT NULL,
     invoice_path VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 )";
 if ($conn->query($sqlOrders) === TRUE) {
-    echo "Table 'Orders' created successfully.<br>";
+    echo "Table 'orders' created successfully.<br>";
 } else {
-    die("Error creating 'Orders' table: " . $conn->error);
+    die("Error creating 'orders' table: " . $conn->error);
 }
 
 // Create OrderItems table
-$sqlOrderItems = "CREATE TABLE IF NOT EXISTS OrderItems (
+$sqlOrderItems = "CREATE TABLE IF NOT EXISTS order_items (
     order_item_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
     product_id INT NOT NULL,
     quantity INT NOT NULL,
     price FLOAT NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES Orders(order_id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES Products(product_id) ON DELETE CASCADE
+    FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
 )";
 if ($conn->query($sqlOrderItems) === TRUE) {
-    echo "Table 'OrderItems' created successfully.<br>";
+    echo "Table 'order_items' created successfully.<br>";
 } else {
-    die("Error creating 'OrderItems' table: " . $conn->error);
+    die("Error creating 'order_items' table: " . $conn->error);
 }
 
 // Step 3: Insert Sample Data
 
-// Insert sample data into Users table
-$sqlInsertUsers = "INSERT INTO Users (name, email, password, address, phone) VALUES
-    ('John Doe', 'john@example.com', 'password123', '123 Main St', '1234567890'),
-    ('Jane Smith', 'jane@example.com', 'password123', '456 Elm St', '0987654321')";
-if ($conn->query($sqlInsertUsers) === TRUE) {
-    echo "Sample data inserted into 'Users' table.<br>";
+// Insert sample categories
+$sqlInsertCategories = "INSERT INTO categories (name) VALUES
+    ('Grains'), ('Spices'), ('Dairy')";
+if ($conn->query($sqlInsertCategories) === TRUE) {
+    echo "Sample categories inserted into 'categories' table.<br>";
 } else {
-    echo "Error inserting data into 'Users': " . $conn->error . "<br>";
+    echo "Error inserting categories into 'categories' table: " . $conn->error . "<br>";
 }
 
-// Insert sample data into Products table
-$sqlInsertProducts = "INSERT INTO Products (name, category, price, stock_quantity, image_path) VALUES
-    ('Basmati Rice', 'Grains', 12.99, 50, 'images/rice.jpg'),
-    ('Turmeric Powder', 'Spices', 4.99, 100, 'images/turmeric.jpg'),
-    ('Paneer', 'Dairy', 8.99, 30, 'images/paneer.jpg')";
+// Insert sample products
+$sqlInsertProducts = "INSERT INTO products (name, category_id, price, stock_quantity, image_path, description) VALUES
+    ('Basmati Rice', 1, 12.99, 50, 'images/rice.jpeg', 'Premium quality Basmati rice, perfect for all cuisines.'),
+    ('Turmeric Powder', 2, 4.99, 100, 'images/turmeric.jpeg', 'Organic turmeric powder for cooking and health benefits.'),
+    ('Paneer', 3, 8.99, 30, 'images/paneer.jpeg', 'Fresh and soft paneer, ideal for curries and snacks.')";
 if ($conn->query($sqlInsertProducts) === TRUE) {
-    echo "Sample data inserted into 'Products' table.<br>";
+    echo "Sample products inserted into 'products' table.<br>";
 } else {
-    echo "Error inserting data into 'Products': " . $conn->error . "<br>";
+    echo "Error inserting products into 'products' table: " . $conn->error . "<br>";
 }
 
-// Insert sample data into Cart table
-$sqlInsertCart = "INSERT INTO Cart (user_id, product_id, quantity) VALUES
-    (1, 1, 2),
-    (2, 2, 1)";
-if ($conn->query($sqlInsertCart) === TRUE) {
-    echo "Sample data inserted into 'Cart' table.<br>";
+// Insert sample users
+$sqlInsertUsers = "INSERT INTO users (name, email, password) VALUES
+    ('John Doe', 'john@example.com', 'password123'),
+    ('Jane Smith', 'jane@example.com', 'password123')";
+if ($conn->query($sqlInsertUsers) === TRUE) {
+    echo "Sample users inserted into 'users' table.<br>";
 } else {
-    echo "Error inserting data into 'Cart': " . $conn->error . "<br>";
-}
-
-// Insert sample data into Orders table
-$sqlInsertOrders = "INSERT INTO Orders (user_id, order_date, total_amount, invoice_path) VALUES
-    (1, NOW(), 25.98, 'invoices/order1.pdf'),
-    (2, NOW(), 4.99, 'invoices/order2.pdf')";
-if ($conn->query($sqlInsertOrders) === TRUE) {
-    echo "Sample data inserted into 'Orders' table.<br>";
-} else {
-    echo "Error inserting data into 'Orders': " . $conn->error . "<br>";
-}
-
-// Insert sample data into OrderItems table
-$sqlInsertOrderItems = "INSERT INTO OrderItems (order_id, product_id, quantity, price) VALUES
-    (1, 1, 2, 12.99),
-    (2, 2, 1, 4.99)";
-if ($conn->query($sqlInsertOrderItems) === TRUE) {
-    echo "Sample data inserted into 'OrderItems' table.<br>";
-} else {
-    echo "Error inserting data into 'OrderItems': " . $conn->error . "<br>";
+    echo "Error inserting users into 'users' table: " . $conn->error . "<br>";
 }
 
 // Close the connection
