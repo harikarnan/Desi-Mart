@@ -3,9 +3,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 :root {
     /* Bg Colors */
-    --header-bg-color: #EB6539;
-    --footer-bg-color: #1F4F3D;
-    --bg-color: #FCEFDE;
+    --header-bg-color: #FFFFFF;
+    --bg-color: #F3FFEE;
     /* CTA Colors */
     --primary-cta-color: #A1351B;
     --secondary-cta-bg-color: transparent;
@@ -29,6 +28,10 @@ body {
     flex-direction: column;
 }
 
+.logo {
+    width: 70px;
+}
+
 .page-container {
     display: flex;
     flex-direction: column;
@@ -46,11 +49,17 @@ header {
     color: var(--black);
     padding: 1rem;
     text-align: center;
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 header nav a {
     color: var(--black);
-    margin: 0 1rem;
+    padding: 0 1rem;
     text-decoration: none;
 }
 
@@ -89,7 +98,7 @@ header nav a:hover {
 
 .product-item p {
     margin: .5rem 0;
-    color: var(--header-bg-color);
+    color: var(--black);
 }
 
 .product-item a {
@@ -108,13 +117,12 @@ header nav a:hover {
 
 /* Footer */
 footer {
-    background-color: var(--footer-bg-color);
+    background-color: var(--black);
     color: var(--white);
     text-align: center;
     padding: 3rem 1rem;
     margin-top: 2rem;
     position: relative;
-    width: 100%;
     bottom: 0;
     margin-top: auto;
 }
