@@ -13,6 +13,12 @@ require_once 'classes/Product.php';
 $db = (new Database())->getConnection();
 $product = new Product($db);
 
+// Fetch categories
+$query = "SELECT * FROM categories";
+$stmt = $db->prepare($query);
+$stmt->execute();
+$categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 // Fetch featured products
 $featuredProducts = $product->getAllProducts();
 ?>
@@ -29,23 +35,39 @@ $featuredProducts = $product->getAllProducts();
         <?php include 'includes/header.php'; ?>
         <main>
             <h1>Welcome to DesiMart</h1>
-            <h2>Featured Products</h2>
-            <div class="product-list">
-                <?php if (empty($featuredProducts)): ?>
-                    <p>No products available at the moment.</p>
-                <?php else: ?>
-                    <?php foreach ($featuredProducts as $product): ?>
-                        <div class="product-item">
-                            <img src="<?php echo htmlspecialchars($product['image_path'] ?: 'images/placeholder.png'); ?>" 
-                                 alt="<?php echo htmlspecialchars($product['name']); ?>" style="width:150px; height:auto;">
-                            <h3><?php echo htmlspecialchars($product['name']); ?></h3>
-                            <p>$<?php echo htmlspecialchars(number_format($product['price'], 2)); ?></p>
-                            <p><?php echo htmlspecialchars(substr($product['description'], 0, 100)) . '...'; ?></p>
-                            <a href="product_details.php?id=<?php echo htmlspecialchars($product['product_id']); ?>">View Details</a>
-                        </div>
+            
+            <!-- Categories Section -->
+            <section class="categories">
+                <h2>Categories</h2>
+                <div class="category-list">
+                    <?php foreach ($categories as $category): ?>
+                        <a href="products.php?category=<?php echo htmlspecialchars($category['category_id']); ?>" class="category-item">
+                            <?php echo htmlspecialchars($category['name']); ?>
+                        </a>
                     <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
+                </div>
+            </section>
+            
+            <!-- Featured Products Section -->
+            <section class="featured-products">
+                <h2>Featured Products</h2>
+                <div class="product-list">
+                    <?php if (empty($featuredProducts)): ?>
+                        <p>No products available at the moment.</p>
+                    <?php else: ?>
+                        <?php foreach ($featuredProducts as $product): ?>
+                            <div class="product-item">
+                                <img src="<?php echo htmlspecialchars($product['image_path'] ?: 'images/placeholder.png'); ?>" 
+                                     alt="<?php echo htmlspecialchars($product['name']); ?>" style="width:150px; height:auto;">
+                                <h3><?php echo htmlspecialchars($product['name']); ?></h3>
+                                <p>$<?php echo htmlspecialchars(number_format($product['price'], 2)); ?></p>
+                                <p><?php echo htmlspecialchars(substr($product['description'], 0, 100)) . '...'; ?></p>
+                                <a href="product_details.php?id=<?php echo htmlspecialchars($product['product_id']); ?>">View Details</a>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </section>
         </main>
         <?php include 'includes/footer.php'; ?>
     </div>
