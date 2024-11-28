@@ -67,6 +67,84 @@ header nav a:hover {
     text-decoration: underline;
 }
 
+/* Categories Section Styling */
+.categories {
+    background-color: var(--white);
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    text-align: center;
+    border-top: 2px solid var(--primary-cta-color);
+}
+
+.categories h2 {
+    font-size: 2rem;
+    color: var(--primary-cta-color);
+    margin-bottom: 2rem;
+}
+
+.category-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.category-item {
+    background-color: var(--white);
+    border: 1px solid var(--primary-cta-color);
+    border-radius: 8px;
+    padding: 1rem;
+    text-decoration: none;
+    color: var(--black);
+    width: 180px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.category-icon {
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-cta-color);
+    margin-bottom: 1rem;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 50px;
+    font-size: 1.5rem;
+    color: var(--white);
+    text-align: center;
+}
+
+.category-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary-cta-color);
+    display: block;
+    margin-top: 0.5rem;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .category-list {
+        gap: 1.5rem;
+    }
+
+    .category-item {
+        width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-item {
+        width: 120px;
+    }
+}
+
+
 /* Product List */
 .product-list {
     display: flex;
@@ -168,10 +246,9 @@ footer {
     transition: background-color 0.3s ease;
 }
 
-
 /* Form CSS Starts */
 
-/* Common Container for Login, Register, Logout */
+/* Common Container for Login, Register, Checkout */
 .common-container {
     max-width: 400px;
     margin: 5rem auto;
@@ -210,55 +287,50 @@ footer {
     color: var(--black);
 }
 
-.common-container .form-group input {
+.common-container .form-group input, .common-container .form-group textarea {
     padding: 0.8rem;
     border: 1px solid var(--secondary-cta-color);
     border-radius: 5px;
     font-size: 1rem;
     width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.common-container a {
-    color: var(--primary-cta-color);
-    text-decoration: none;
+/* Styling the Textarea */
+.common-container .form-group textarea {
+    height: 150px; /* Adjust height for better user experience */
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 150px; /* Ensure the textarea has a minimum height */
+    max-height: 300px; /* Optional: you can set a max height to avoid overly large textareas */
 }
 
-.common-container a:hover {
-    text-decoration: underline;
+/* Focus and Hover Effects */
+.common-container .form-group input:focus, 
+.common-container .form-group textarea:focus {
+    border-color: var(--primary-cta-color); /* Highlight with primary color on focus */
+    box-shadow: 0 0 5px rgba(0, 128, 255, 0.5); /* Subtle shadow on focus */
 }
 
+/* Styling the Buttons */
+.checkout-form button {
+    padding: 1rem;
+    background-color: var(--primary-cta-color);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.checkout-form button:hover {
+    background-color: darken(var(--primary-cta-color), 10%);
+}
 
 /* Error Message */
 .error-message {
     color: red;
     font-size: 0.9rem;
     margin-bottom: 1rem;
-}
-
-/* Login and Register specific */
-.common-container p {
-    font-size: 1rem;
-    color: var(--black);
-}
-
-/* Register specific styles */
-.register-container p {
-    font-size: 1rem;
-    color: var(--primary-cta-color);
-}
-
-/* Login specific styles */
-.login-container p {
-    font-size: 1rem;
-    color: var(--primary-cta-color);
-}
-
-/* Logout Page */
-.logout-container {
-    text-align: center;
-    padding: 2rem;
-    font-size: 1.2rem;
-    color: var(--primary-cta-color);
 }
 
 /* Form CSS Ends */
