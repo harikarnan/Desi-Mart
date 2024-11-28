@@ -1,10 +1,32 @@
 /* General Styling */
+/* Font : OSWALD */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+:root {
+    /* Bg Colors */
+    --header-bg-color: #EB6539;
+    --footer-bg-color: #1F4F3D;
+    --bg-color: #FCEFDE;
+    /* CTA Colors */
+    --primary-cta-color: #A1351B;
+    --secondary-cta-bg-color: transparent;
+    --secondary-cta-color: #A1351B; 
+    /* Font Colors */
+    --white: #FFFFFF;
+    --black: #000000;
+  
+    /* font css */
+    --font: "Oswald", sans-serif;
+  }
+
+
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: var(--font);
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
+    background-color: var(--bg-color);
     min-height: 100vh;
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -17,21 +39,20 @@ body {
 
 main {
     flex: 1;
-    padding: 20px;
-    padding-bottom: 60px; /* Adjust this value to match the footer height */
+    padding: 2rem;
 }
 
 /* Header */
 header {
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
+    background-color: var(--header-bg-color);
+    color: var(--black);
+    padding: 1rem;
     text-align: center;
 }
 
 header nav a {
-    color: white;
-    margin: 0 10px;
+    color: var(--black);
+    margin: 0 1rem;
     text-decoration: none;
 }
 
@@ -43,18 +64,18 @@ header nav a:hover {
 .product-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 1.5rem;
     justify-content: center;
 }
 
 .product-item {
-    background: white;
-    border: 1px solid #ccc;
+    background: var(--white);
+    border: 1px solid var(--secondary-cta-color);
     border-radius: 5px;
-    padding: 10px;
+    padding: 1rem;
     text-align: center;
-    width: 200px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
 }
 
 .product-item img {
@@ -65,12 +86,12 @@ header nav a:hover {
 
 .product-item h3 {
     font-size: 18px;
-    margin: 10px 0;
+    margin: 1rem 0;
 }
 
 .product-item p {
-    margin: 5px 0;
-    color: #333;
+    margin: .5rem 0;
+    color: var(--header-bg-color);
 }
 
 .product-item a {
@@ -89,35 +110,34 @@ header nav a:hover {
 
 /* Footer */
 footer {
-    background-color: #333;
-    color: white;
+    background-color: var(--footer-bg-color);
+    color: var(--white);
     text-align: center;
-    padding: 20px;
-    margin-top: 20px;
+    padding: 3rem 1rem;
+    margin-top: 2rem;
     position: relative;
     width: 100%;
     bottom: 0;
-    margin-top: auto; /* Ensures footer stays at the bottom */
+    margin-top: auto;
 }
 
 .container {
-    max-width: 800px;
     margin: 0 auto;
     text-align: center;
-    padding: 20px;
+    padding: 2rem;
 }
 
 .actions {
-    margin-top: 20px;
+    margin-top: 1rem;
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 1rem;
 }
 
-.actions .btn {
-    background-color: #007BFF;
+.primary-btn {
+    background-color: var(--primary-cta-color);
     color: white;
-    padding: 10px 20px;
+    padding: 1rem;
     border: none;
     text-decoration: none;
     border-radius: 5px;
@@ -125,19 +145,19 @@ footer {
     transition: background-color 0.3s ease;
 }
 
-.actions .btn:hover {
-    background-color: #0056b3;
-}
 
 .checkout-summary {
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
     font-size: 1.2rem;
 }
+
+
+/* Form CSS Starts */
 
 .checkout-form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 1rem;
 }
 
 .form-group {
@@ -146,14 +166,14 @@ footer {
 }
 
 .form-group label {
-    margin-bottom: 5px;
+    margin-bottom: 1rem;
     font-weight: bold;
 }
 
 .form-group input,
 .form-group textarea {
-    padding: 10px;
-    border: 1px solid #ccc;
+    padding: 1rem;
+    border: 1px solid var(--secondary-cta-color);
     border-radius: 4px;
     font-size: 1rem;
 }
@@ -163,13 +183,15 @@ textarea {
     min-height: 80px;
 }
 
-.btn {
-    background-color: #007BFF;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    text-decoration: none; /* Ensures no underline */
-    border-radius: 4px;
+/* Form CSS  Ends*/
+
+.secondary-btn {
+    background-color: var(--secondary-cta-bg-color);
+    color: var(--secondary-cta-color);
+    padding: 1rem;
+    border: 1px solid var(--secondary-cta-color);
+    text-decoration: none;
+    border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
     display: inline-block;
@@ -177,7 +199,3 @@ textarea {
     transition: background-color 0.3s ease;
 }
 
-.btn:hover {
-    background-color: #0056b3;
-    text-decoration: none; /* Ensure no underline on hover */
-}
