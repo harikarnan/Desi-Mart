@@ -39,22 +39,6 @@ if ($conn->query($sqlUsers) === TRUE) {
     die("Error creating 'users' table: " . $conn->error);
 }
 
-// Create Products table
-$sqlProducts = "CREATE TABLE IF NOT EXISTS products (
-    product_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    category_id INT NOT NULL,
-    price FLOAT NOT NULL,
-    stock_quantity INT NOT NULL,
-    image_path VARCHAR(255),
-    description TEXT
-)";
-if ($conn->query($sqlProducts) === TRUE) {
-    echo "Table 'products' created successfully.<br>";
-} else {
-    die("Error creating 'products' table: " . $conn->error);
-}
-
 // Create Categories table
 $sqlCategories = "CREATE TABLE IF NOT EXISTS categories (
     category_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -64,6 +48,23 @@ if ($conn->query($sqlCategories) === TRUE) {
     echo "Table 'categories' created successfully.<br>";
 } else {
     die("Error creating 'categories' table: " . $conn->error);
+}
+
+// Create Products table
+$sqlProducts = "CREATE TABLE IF NOT EXISTS products (
+    product_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    category_id INT NOT NULL,
+    price FLOAT NOT NULL,
+    stock_quantity INT NOT NULL,
+    image_path VARCHAR(255),
+    description TEXT,
+    FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE
+)";
+if ($conn->query($sqlProducts) === TRUE) {
+    echo "Table 'products' created successfully.<br>";
+} else {
+    die("Error creating 'products' table: " . $conn->error);
 }
 
 // Create Orders table
