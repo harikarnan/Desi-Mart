@@ -248,6 +248,16 @@ header nav a:hover {
     color: var(--black);
 }
 
+.cart-item {
+    display: flex;
+    background-color: white;
+    padding: 1rem;
+    width: 50%;
+    border-radius: 5px;
+    justify-content: space-between;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    margin-bottom: 2rem;
+}
 
 /* Footer */
 footer {
