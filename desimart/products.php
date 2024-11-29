@@ -33,18 +33,26 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php include 'includes/header.php'; ?>
     <main>
         <h1>Products</h1>
-        <form method="GET">
-            <label for="category">Filter by Category:</label>
-            <select name="category" id="category" onchange="this.form.submit()">
-                <option value="">All Categories</option>
-                <?php foreach ($categories as $category): ?>
-                    <option value="<?php echo htmlspecialchars($category['category_id']); ?>" 
-                            <?php echo ($category['category_id'] == $categoryFilter) ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($category['name']); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </form>
+
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <form method="GET" class="filter-form">
+                <div class="filter-group">
+                    <label for="category">Filter by Category:</label>
+                    <select name="category" id="category" onchange="this.form.submit()">
+                        <option value="">All Categories</option>
+                        <?php foreach ($categories as $category): ?>
+                            <option value="<?php echo htmlspecialchars($category['category_id']); ?>" 
+                                    <?php echo ($category['category_id'] == $categoryFilter) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($category['name']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </form>
+        </section>
+
+        <!-- Product List -->
         <div class="product-list">
             <?php if (empty($products)): ?>
                 <p>No products found for the selected category.</p>

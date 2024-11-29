@@ -177,7 +177,6 @@ header nav a:hover {
 .filter-form select {
     padding: 0.8rem;
     font-size: 1rem;
-    border: 2px solid var(--primary-cta-color);
     border-radius: 5px;
     background-color: var(--white);
     color: var(--black);
@@ -231,7 +230,6 @@ header nav a:hover {
 
 .product-item {
     background: var(--white);
-    border: 1px solid var(--secondary-cta-color);
     border-radius: 5px;
     padding: 1rem;
     text-align: center;
