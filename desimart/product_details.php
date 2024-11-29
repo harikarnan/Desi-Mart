@@ -22,6 +22,6 @@ if (!$product) {
     <img src="<?php echo htmlspecialchars($product['image_path']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
     <p><?php echo htmlspecialchars($product['description']); ?></p>
     <p>Price: $<?php echo htmlspecialchars(number_format($product['price'], 2)); ?></p>
-    <a href="add_to_cart.php?id=<?php echo htmlspecialchars($product['product_id']); ?>" class="btn">Add to Cart</a>
+    <a href="add_to_cart.php?id=<?php echo htmlspecialchars($product['product_id']); ?>" class="primary-btn">Add to Cart</a>
 </main>
 <?php include 'includes/footer.php'; ?>

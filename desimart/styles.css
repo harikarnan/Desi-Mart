@@ -200,9 +200,6 @@ header nav a:hover {
     grid-column: span 2; /* Ensures button takes full width of the form */
 }
 
-.filter-form button:hover {
-    background-color: #9e3c2b; /* Darker tone of CTA color */
-}
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
@@ -251,10 +248,6 @@ header nav a:hover {
     color: var(--black);
 }
 
-.product-item a {
-    display: inline-block;
-}
-
 
 /* Footer */
 footer {
@@ -282,8 +275,9 @@ footer {
 }
 
 .primary-btn {
+    display: inline-block;
     background-color: var(--primary-cta-color);
-    color: white;
+    color: var(--white);
     padding: 1rem 2rem;
     border: none;
     text-decoration: none;
