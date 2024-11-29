@@ -21,15 +21,6 @@ if ($categoryFilter) {
 $stmt->execute();
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DesiMart - Products</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
     <?php include 'includes/header.php'; ?>
     <main>
         <h1>Products</h1>
@@ -60,15 +51,16 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php foreach ($products as $product): ?>
                     <div class="product-item">
                         <img src="<?php echo htmlspecialchars($product['image_path'] ?: 'images/placeholder.png'); ?>" 
-                             alt="<?php echo htmlspecialchars($product['name']); ?>" style="width:150px; height:auto;">
+                             alt="<?php echo htmlspecialchars($product['name']); ?>" style="width:150px">
                         <h3><?php echo htmlspecialchars($product['name']); ?></h3>
                         <p>$<?php echo htmlspecialchars(number_format($product['price'], 2)); ?></p>
-                        <a href="product_details.php?id=<?php echo htmlspecialchars($product['product_id']); ?>">View Details</a>
+                        <div>
+                            <a class="primary-btn" href="product_details.php?id=<?php echo htmlspecialchars($product['product_id']); ?>">View Details</a>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
     </main>
     <?php include 'includes/footer.php'; ?>
-</body>
-</html>
+
