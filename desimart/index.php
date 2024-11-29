@@ -42,7 +42,8 @@ $featuredProducts = $product->getAllProducts();
                 <div class="category-list">
                     <?php foreach ($categories as $category): ?>
                         <a href="products.php?category=<?php echo htmlspecialchars($category['category_id']); ?>" class="category-item">
-                            <?php echo htmlspecialchars($category['name']); ?>
+                            <div class="category-icon"></div>
+                            <span class="category-name"><?php echo htmlspecialchars($category['name']); ?></span>
                         </a>
                     <?php endforeach; ?>
                 </div>

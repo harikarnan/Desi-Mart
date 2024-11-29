@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $query = "INSERT INTO orders (user_id, order_date, total_amount, address, email, mobile_number, city, province, country, pincode) 
               VALUES (:user_id, NOW(), :total_amount, :address, :email, :mobile_number, :city, :province, :country, :pincode)";
     $stmt = $db->prepare($query);
-    $stmt->execute([
+    $stmt->execute([ 
         ':user_id' => $_SESSION['user']['id'],
         ':total_amount' => $totalAmount,
         ':address' => $address,
@@ -70,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,55 +81,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <?php include 'includes/header.php'; ?>
-    <main class="container">
-        <h1>Checkout</h1>
-        <?php if (empty($cart)): ?>
-            <p>Your cart is empty. <a href="index.php">Start shopping</a>.</p>
-        <?php else: ?>
-            <div class="checkout-summary">
-                <p>Total Amount: <strong>$<?php echo htmlspecialchars(number_format($totalAmount, 2)); ?></strong></p>
-            </div>
-            <form method="POST" class="checkout-form">
-                <div class="form-group">
-                    <label for="first_name">First Name:</label>
-                    <input type="text" name="first_name" id="first_name" required>
+    <main>
+        <div class="common-container">
+            <h1>DesiMart</h1>
+            <h2>Checkout</h2>
+            <?php if (empty($cart)): ?>
+                <p>Your cart is empty. <a href="index.php">Start shopping</a>.</p>
+            <?php else: ?>
+                <div class="checkout-summary">
+                    <p>Total Amount: <strong>$<?php echo htmlspecialchars(number_format($totalAmount, 2)); ?></strong></p>
                 </div>
-                <div class="form-group">
-                    <label for="last_name">Last Name:</label>
-                    <input type="text" name="last_name" id="last_name" required>
-                </div>
-                <div class="form-group">
-                    <label for="address">Address:</label>
-                    <textarea name="address" id="address" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" name="email" id="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="mobile_number">Mobile Number:</label>
-                    <input type="tel" name="mobile_number" id="mobile_number" pattern="[0-9]{10}" required>
-                </div>
-                <div class="form-group">
-                    <label for="city">City:</label>
-                    <input type="text" name="city" id="city" required>
-                </div>
-                <div class="form-group">
-                    <label for="province">Province:</label>
-                    <input type="text" name="province" id="province" required>
-                </div>
-                <div class="form-group">
-                    <label for="country">Country:</label>
-                    <input type="text" name="country" id="country" required>
-                </div>
-                <div class="form-group">
-                    <label for="pincode">Pincode:</label>
-                    <input type="text" name="pincode" id="pincode" pattern="[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d" required placeholder="A1A 1A1">
-                </div>
-                <button type="submit" class="btn">Place Order</button>
-            </form>
-        <?php endif; ?>
+                <form method="POST" class="checkout-form">
+                    <div class="form-group">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" name="first_name" id="first_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" name="last_name" id="last_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <textarea name="address" id="address" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" name="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile_number">Mobile Number:</label>
+                        <input type="tel" name="mobile_number" id="mobile_number" pattern="[0-9]{10}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City:</label>
+                        <input type="text" name="city" id="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="province">Province:</label>
+                        <input type="text" name="province" id="province" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country:</label>
+                        <input type="text" name="country" id="country" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pincode">Pincode:</label>
+                        <input type="text" name="pincode" id="pincode" pattern="[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d" required placeholder="A1A 1A1">
+                    </div>
+                    <button type="submit" class="primary-btn">Place Order</button>
+                </form>
+            <?php endif; ?>
+        </div>
     </main>
     <?php include 'includes/footer.php'; ?>
 </body>
 </html>
+

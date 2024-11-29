@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,23 +53,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <?php include 'includes/header.php'; ?>
     <main>
-        <h1>Register</h1>
-        <?php if (isset($error)): ?>
-            <p style="color: red;"><?php echo htmlspecialchars($error); ?></p>
-        <?php endif; ?>
-        <form method="POST">
-            <label for="name">Name:</label>
-            <input type="text" name="name" id="name" required>
-            
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required>
-            
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" required>
-            
-            <button type="submit">Register</button>
-        </form>
-        <p>Already have an account? <a href="login.php">Login here</a>.</p>
+        <div class="common-container">
+            <h1>Welcome to DesiMart</h1>
+            <h2>Register</h2>
+            <?php if (isset($error)): ?>
+                <p class="error-message"><?php echo htmlspecialchars($error); ?></p>
+            <?php endif; ?>
+            <form method="POST">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" id="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+                
+                <button type="submit" class="primary-btn">Register</button>
+            </form>
+            <p>Already have an account? <a href="login.php">Login here</a>.</p>
+        </div>
     </main>
     <?php include 'includes/footer.php'; ?>
 </body>
