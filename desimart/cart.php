@@ -45,12 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <button type="submit" class="btn">Update</button>
                     </form>
                     <p>Total: $<?php echo htmlspecialchars(number_format($item['price'] * $item['quantity'], 2)); ?></p>
-                    <a href="remove_from_cart.php?id=<?php echo htmlspecialchars($product_id); ?>" class="btn">Remove</a>
+                    <a href="remove_from_cart.php?id=<?php echo htmlspecialchars($product_id); ?>" class="secondary-btn">Remove</a>
                 </div>
             <?php endforeach; ?>
         </div>
         <p><strong>Grand Total: $<?php echo htmlspecialchars(number_format($totalAmount, 2)); ?></strong></p>
-        <a href="checkout.php" class="btn">Proceed to Checkout</a>
+        <a href="checkout.php" class="primary-btn">Proceed to Checkout</a>
     <?php endif; ?>
 </main>
 <?php include 'includes/footer.php'; ?>
