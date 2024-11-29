@@ -34,7 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php foreach ($cart as $product_id => $item): ?>
                 <div class="cart-item">
                     <img src="<?php echo htmlspecialchars($item['image_path'] ?: 'images/placeholder.png'); ?>"
-                        alt="<?php echo htmlspecialchars($item['name']); ?>" style="width:100px; height:auto;">
+                        alt="<?php echo htmlspecialchars($item['name']); ?>" style="width:250px;height: auto;">
+                        <div>
+
                     <h3><?php echo htmlspecialchars($item['name']); ?></h3>
                     <p>Price: $<?php echo htmlspecialchars(number_format($item['price'], 2)); ?></p>
                     <form method="POST" style="display: inline;">
@@ -46,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </form>
                     <p>Total: $<?php echo htmlspecialchars(number_format($item['price'] * $item['quantity'], 2)); ?></p>
                     <a href="remove_from_cart.php?id=<?php echo htmlspecialchars($product_id); ?>" class="secondary-btn">Remove</a>
+                    </div>
                 </div>
             <?php endforeach; ?>
         </div>
