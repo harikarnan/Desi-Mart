@@ -89,16 +89,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="text" name="last_name" id="last_name" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="address">Address:</label>
-                    <textarea name="address" id="address" class="form-control" required></textarea>
-                </div>
-                <div class="form-group">
                     <label for="email">Email:</label>
                     <input type="email" name="email" id="email" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="mobile_number">Mobile Number:</label>
                     <input type="tel" name="mobile_number" id="mobile_number" class="form-control" pattern="[0-9]{10}" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea name="address" id="address" class="form-control" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country:</label>
+                    <input type="text" name="country" id="country" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="province">Province/State:</label>
+                    <input type="text" name="province" id="province" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" name="city" id="city" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="pincode">Pincode/Postal Code:</label>
+                    <input type="text" name="pincode" id="pincode" class="form-control" pattern="[0-9]{5,6}" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Place Order</button>
             </form>
