@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 ?>
-    <?php include 'includes/header.php'; ?>
+   <?php include 'includes/header.php'; ?>
 <main>
     <div class="common-container">
         <h1>DesiMart</h1>
@@ -89,6 +89,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="text" name="last_name" id="last_name" class="form-control" required>
                 </div>
                 <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea name="address" id="address" class="form-control" required></textarea>
+                </div>
+                <div class="form-group">
                     <label for="email">Email:</label>
                     <input type="email" name="email" id="email" class="form-control" required>
                 </div>
@@ -97,24 +101,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="tel" name="mobile_number" id="mobile_number" class="form-control" pattern="[0-9]{10}" required>
                 </div>
                 <div class="form-group">
-                    <label for="address">Address:</label>
-                    <textarea name="address" id="address" class="form-control" required></textarea>
-                </div>
-                <div class="form-group">
                     <label for="country">Country:</label>
-                    <input type="text" name="country" id="country" class="form-control" required>
+                    <select name="country" id="country" class="form-control" required>
+                        <option value="">Select Country</option>
+                        <option value="Canada" disabled>Canada</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="province">Province/State:</label>
-                    <input type="text" name="province" id="province" class="form-control" required>
+                    <label for="province">Province:</label>
+                    <select name="province" id="province" class="form-control" required>
+                        <option value="">Select Province</option>
+                        <option value="Alberta">Alberta</option>
+                        <option value="British Columbia">British Columbia</option>
+                        <option value="Manitoba">Manitoba</option>
+                        <option value="New Brunswick">New Brunswick</option>
+                        <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+                        <option value="Nova Scotia">Nova Scotia</option>
+                        <option value="Ontario">Ontario</option>
+                        <option value="Prince Edward Island">Prince Edward Island</option>
+                        <option value="Quebec">Quebec</option>
+                        <option value="Saskatchewan">Saskatchewan</option>
+                        <option value="Northwest Territories">Northwest Territories</option>
+                        <option value="Nunavut">Nunavut</option>
+                        <option value="Yukon">Yukon</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="city">City:</label>
                     <input type="text" name="city" id="city" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="pincode">Pincode/Postal Code:</label>
-                    <input type="text" name="pincode" id="pincode" class="form-control" pattern="[0-9]{5,6}" required>
+                    <label for="pincode">Pincode:</label>
+                    <input type="text" name="pincode" id="pincode" class="form-control" pattern="[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d" placeholder="E.g., A1A 1A1" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Place Order</button>
             </form>
