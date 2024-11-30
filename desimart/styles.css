@@ -179,7 +179,7 @@ header nav a:hover {
     background-color: var(--white);
     color: var(--black);
     transition: all 0.3s ease;
-    cursor: pointer;
+    cursor: pointer;    
 }
 
 .filter-form select:focus {
@@ -402,15 +402,3 @@ footer {
 }
 
 /* Form CSS Ends */
-
-
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-    .category-list {
-        gap: 1.5rem;
-    }
-
-    .category-item {
-        width: 150px;
-    }
-}
