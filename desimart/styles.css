@@ -67,81 +67,161 @@ header nav a:hover {
     text-decoration: underline;
 }
 
-/* Categories Section Styling */
-.categories {
-    background-color: var(--white);
-    padding: 2rem 0;
-    margin-bottom: 2rem;
+/* Banner Section */
+.banner {
+    position: relative;
+    max-height: 500px;
+    overflow: hidden;
+}
+
+.banner img {
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+}
+
+.banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Semi-transparent dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner-text {
+    position: relative;
+    color: var(--white); /* Ensures text contrasts with overlay */
     text-align: center;
-    border-top: 2px solid var(--primary-cta-color);
+    z-index: 1; /* Ensures text appears on top of the overlay */
+}
+
+.fade-in {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.banner-text h1,
+.banner-text p {
+    margin: 0;
+    padding: 0;
+}
+
+.banner:hover .banner-overlay {
+    opacity: 1; 
+}
+
+/* Featured Categories Styling */
+.categories {
+    padding-top: 2rem;
+    background-color: var(--bg-color);
 }
 
 .categories h2 {
+    font-family: var(--font);
+    color: var(--black);
     font-size: 2rem;
-    color: var(--primary-cta-color);
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
-.category-list {
+.categories-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 2rem;
+    gap: 20px; /* Space between category circles */
 }
 
 .category-item {
-    background-color: var(--white);
-    border: 1px solid var(--primary-cta-color);
-    border-radius: 8px;
-    padding: 1rem;
-    text-decoration: none;
-    color: var(--black);
-    width: 180px;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 120px; /* Fixed size for each item */
+    margin: 0 auto;
 }
 
-.category-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.category-icon {
-    width: 50px;
-    height: 50px;
-    background-color: var(--primary-cta-color);
-    margin-bottom: 1rem;
+.category-circle {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
     border-radius: 50%;
-    display: inline-block;
-    line-height: 50px;
-    font-size: 1.5rem;
-    color: var(--white);
-    text-align: center;
+    background-color: #f8f9fa; /* Light grey background for circle */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.category-name {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--primary-cta-color);
+.category-circle:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.category-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image fits properly within the circle */
+    border-radius: 50%; /* Ensures the image also follows the circle shape */
+}
+
+.category-item span {
     display: block;
     margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--black);
+    font-weight: 500;
 }
 
 
-@media (max-width: 480px) {
-    .category-item {
-        width: 120px;
-    }
+
+/* Featured Offers Section */
+.featured-offers .card-img-top {
+    height: 150px;
+    object-fit: cover;
+}
+
+.featured-offers .card-body {
+    padding: 1.25rem;
+}
+
+.featured-offers .card-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.featured-offers .card-text {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+/* Category Circle Styling */
+.categories .rounded-circle {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Card Styling */
+.featured-offers .card {
+    border: 1px solid #ddd;
 }
 
 
-/* Filter Section Styling */
+.card-body {
+    padding: 1.25rem;
+}
+
+/*filter*/
 .filter-section {
     background-color: var(--white);
     padding: 2rem;
     margin-bottom: 2rem;
     border-radius: 10px;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    width: 50%;
 }
 
 .filter-section h3 {
@@ -152,75 +232,13 @@ header nav a:hover {
     font-weight: bold;
 }
 
-.filter-form {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
-    justify-items: stretch;
-}
-
-.filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.filter-form label {
-    font-weight: bold;
-    color: var(--black);
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-}
-
-.filter-form select {
-    padding: 0.8rem;
-    font-size: 1rem;
-    border-radius: 5px;
-    background-color: var(--white);
-    color: var(--black);
-    transition: all 0.3s ease;
-    cursor: pointer;    
-}
-
-.filter-form select:focus {
-    border-color: var(--primary-cta-color);
-    box-shadow: 0 0 8px rgba(161, 53, 27, 0.4); /* Subtle glow effect */
-}
-
-.filter-form button {
-    padding: 0.8rem 1.5rem;
-    background-color: var(--primary-cta-color);
-    color: var(--white);
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    align-self: center;
-    grid-column: span 2; /* Ensures button takes full width of the form */
-}
-
-
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-    .filter-form {
-        grid-template-columns: 1fr; /* Stack the form items on smaller screens */
-        gap: 1rem;
-    }
-
-    .filter-form button {
-        grid-column: span 1;
-        width: 100%;
-    }
-}
-
 
 /* Product List */
 .product-list {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
-    /* justify-content: center; */
+    
 }
 
 .product-item {
@@ -246,6 +264,25 @@ header nav a:hover {
 .product-item p {
     margin: .5rem 0;
     color: var(--black);
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.03);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .cart-item {
@@ -296,7 +333,6 @@ footer {
     transition: background-color 0.3s ease;
     align-self: center;
     font-weight: 600;
-    
 }
 
 .secondary-btn {
@@ -379,26 +415,18 @@ footer {
     outline: none;
 }
 
-/* Styling the Buttons */
-.checkout-form button {
-    padding: 1rem;
-    background-color: var(--primary-cta-color);
-    color: var(--white);
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .categories-container {
+        gap: 15px; /* Reduce spacing on smaller screens */
+    }
+    .category-circle {
+        width: 80px;
+        height: 80px;
+    }
+    .category-item span {
+        font-size: 0.8rem;
+    }
 }
 
-.checkout-form button:hover {
-    background-color: darken(var(--primary-cta-color), 10%);
-}
-
-/* Error Message */
-.error-message {
-    color: red;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-}
-
-/* Form CSS Ends */
