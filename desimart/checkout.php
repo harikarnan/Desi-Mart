@@ -7,6 +7,8 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+echo json_encode($_SESSION['user']);
+
 $cart = $_SESSION['cart'] ?? [];
 $totalAmount = 0;
 $taxRate = 0.13; // Example tax rate (13%)
@@ -109,9 +111,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <div class="form-group col-md-8 mb-3">
                                 <label  class="mb-2" for="country">Country:</label>
-                                <select name="country" id="country" class="form-control form-control-lg" required>
+                                <select name="country" id="country" class="form-control form-control-lg" aria-readonly="true" required>
                                     <option value="">Select Country</option>
-                                    <option value="Canada" disabled>Canada</option>
+                                    <option value="Canada" selected>Canada</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-8 mb-3">
@@ -129,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <div class="form-group col-md-8 mb-3">
                                 <label  class="mb-2" for="pincode">Pincode:</label>
-                                <input type="text" name="pincode" id="pincode" class="form-control form-control-lg" pattern="[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d" required>
+                                <input type="text" name="pincode" id="pincode" placeholder="A1A 1A1" class="form-control form-control-lg" pattern="[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d" required>
                             </div>
                             <button type="submit" class="btn btn-primary col-md-8 btn-lg btn-block mt-3" style="margin-top: auto;">Place Order</button>
                         </form>

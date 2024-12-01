@@ -353,7 +353,7 @@ footer {
 
 /* Common Container for Login, Register, Checkout */
 .common-container {
-    max-width: 400px;
+    max-width: 50%;
     margin: 5rem auto;
     background-color: var(--white);
     padding: 4rem;
