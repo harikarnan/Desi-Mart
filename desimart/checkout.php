@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $query = "INSERT INTO orders (user_id, order_date, total_amount, address, email, mobile_number, city, province, country, pincode) 
               VALUES (:user_id, NOW(), :total_amount, :address, :email, :mobile_number, :city, :province, :country, :pincode)";
     $stmt = $db->prepare($query);
-    $stmt->execute([
+    $stmt->execute([ 
         ':user_id' => $_SESSION['user']['id'],
         ':total_amount' => $totalAmount,
         ':address' => $address,
@@ -70,65 +70,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DesiMart - Checkout</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <?php include 'includes/header.php'; ?>
-    <main class="container">
-        <h1>Checkout</h1>
+   <?php include 'includes/header.php'; ?>
+<main>
+    <div class="common-container">
+        <h1>DesiMart</h1>
+        <h2>Checkout</h2>
         <?php if (empty($cart)): ?>
             <p>Your cart is empty. <a href="index.php">Start shopping</a>.</p>
         <?php else: ?>
-            <div class="checkout-summary">
-                <p>Total Amount: <strong>$<?php echo htmlspecialchars(number_format($totalAmount, 2)); ?></strong></p>
-            </div>
-            <form method="POST" class="checkout-form">
+            <p>Total Amount: <strong>$<?php echo htmlspecialchars(number_format($totalAmount, 2)); ?></strong></p>
+            <form method="POST">
                 <div class="form-group">
                     <label for="first_name">First Name:</label>
-                    <input type="text" name="first_name" id="first_name" required>
+                    <input type="text" name="first_name" id="first_name" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="last_name">Last Name:</label>
-                    <input type="text" name="last_name" id="last_name" required>
+                    <input type="text" name="last_name" id="last_name" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="address">Address:</label>
-                    <textarea name="address" id="address" required></textarea>
+                    <textarea name="address" id="address" class="form-control" required></textarea>
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" name="email" id="email" required>
+                    <input type="email" name="email" id="email" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="mobile_number">Mobile Number:</label>
-                    <input type="tel" name="mobile_number" id="mobile_number" pattern="[0-9]{10}" required>
-                </div>
-                <div class="form-group">
-                    <label for="city">City:</label>
-                    <input type="text" name="city" id="city" required>
-                </div>
-                <div class="form-group">
-                    <label for="province">Province:</label>
-                    <input type="text" name="province" id="province" required>
+                    <input type="tel" name="mobile_number" id="mobile_number" class="form-control" pattern="[0-9]{10}" required>
                 </div>
                 <div class="form-group">
                     <label for="country">Country:</label>
-                    <input type="text" name="country" id="country" required>
+                    <select name="country" id="country" class="form-control" required >
+                        <option value="">Select Country</option>
+                        <option value="Canada" disabled>Canada</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="province">Province:</label>
+                    <select name="province" id="province" class="form-control" required>
+                        <option value="">Select Province</option>
+                        <option value="Alberta">Alberta</option>
+                        <option value="British Columbia">British Columbia</option>
+                        <option value="Manitoba">Manitoba</option>
+                        <option value="New Brunswick">New Brunswick</option>
+                        <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+                        <option value="Nova Scotia">Nova Scotia</option>
+                        <option value="Ontario">Ontario</option>
+                        <option value="Prince Edward Island">Prince Edward Island</option>
+                        <option value="Quebec">Quebec</option>
+                        <option value="Saskatchewan">Saskatchewan</option>
+                        <option value="Northwest Territories">Northwest Territories</option>
+                        <option value="Nunavut">Nunavut</option>
+                        <option value="Yukon">Yukon</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" name="city" id="city" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="pincode">Pincode:</label>
-                    <input type="text" name="pincode" id="pincode" pattern="[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d" required placeholder="A1A 1A1">
+                    <input type="text" name="pincode" id="pincode" class="form-control" pattern="[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d" placeholder="E.g., A1A 1A1" required>
                 </div>
-                <button type="submit" class="btn">Place Order</button>
+                <button type="submit" class="btn btn-primary btn-block">Place Order</button>
             </form>
         <?php endif; ?>
-    </main>
-    <?php include 'includes/footer.php'; ?>
-</body>
-</html>
+    </div>
+</main>
+<?php include 'includes/footer.php'; ?>
