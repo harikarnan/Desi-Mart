@@ -26,7 +26,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <a href="index.php">Home</a>
                     <a href="products.php">Products</a>
                     <a href="cart.php">Cart</a>
-                    <a href="logout.php">Logout</a>
+                    <a href="logout.php?confirm=true">Logout</a>
                     <span>Welcome, <?php echo htmlspecialchars($_SESSION['user']['name']); ?>!</span>
                 <?php endif; ?>
             </div>
