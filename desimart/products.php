@@ -10,7 +10,7 @@ $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Fetch products based on selected category
 $categoryFilter = $_GET['category'] ?? null;
-$query = "SELECT product_id, name, price, image_path, description FROM products";
+$query = "SELECT product_id, name, price, products_image_path, description FROM products";
 if ($categoryFilter) {
     $query .= " WHERE category_id = :category_id";
 }
@@ -51,7 +51,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php foreach ($products as $product): ?>
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="card">
-                    <img src="<?php echo htmlspecialchars($product['image_path'] ?: 'images/placeholder.png'); ?>" 
+                    <img src="<?php echo htmlspecialchars($product['products_image_path'] ?: 'images/placeholder.png'); ?>" 
                          class="card-img-top" 
                          alt="<?php echo htmlspecialchars($product['name']); ?>">
                     <div class="card-body">
