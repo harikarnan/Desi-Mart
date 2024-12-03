@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="cart-list">
             <?php foreach ($cart as $product_id => $item): ?>
                 <div class="cart-item">
-                    <img src="<?php echo htmlspecialchars($item['image_path'] ?: 'images/placeholder.png'); ?>"
+                    <img src="<?php echo htmlspecialchars($item['products_image_path'] ?: 'images/placeholder.png'); ?>"
                         alt="<?php echo htmlspecialchars($item['name']); ?>" style="width:250px;height: auto;">
                         <div>
 

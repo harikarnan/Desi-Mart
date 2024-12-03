@@ -46,7 +46,7 @@ $featuredProducts = $product->getAllProducts();
             <div class="category-item">
                 <a href="products.php?category=<?php echo htmlspecialchars($category['category_id']); ?>" class="text-decoration-none">
                     <div class="category-circle">
-                        <img src="images/categories/<?php echo htmlspecialchars($category['image']); ?>" alt="<?php echo htmlspecialchars($category['name']); ?>" class="img-fluid">
+                        <img src="<?php echo htmlspecialchars($category['categories_image_path']); ?>" alt="<?php echo htmlspecialchars($category['name']); ?>" class="img-fluid">
                     </div>
                     <span><?php echo htmlspecialchars($category['name']); ?></span>
                 </a>
@@ -65,7 +65,7 @@ $featuredProducts = $product->getAllProducts();
                 <?php foreach ($featuredProducts as $product): ?>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="card h-100">
-                            <img src="<?php echo htmlspecialchars($product['image_path'] ?: 'images/placeholder.png'); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($product['name']); ?>" style="height: 150px; object-fit: cover;">
+                            <img src="<?php echo htmlspecialchars($product['products_image_path'] ?: 'images/placeholder.png'); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($product['name']); ?>" style="height: 150px; object-fit: cover;">
                             <div class="card-body text-center">
                                 <h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5>
                                 <p class="card-text text-muted">$<?php echo htmlspecialchars(number_format($product['price'], 2)); ?></p>

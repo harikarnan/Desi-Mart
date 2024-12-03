@@ -10,7 +10,7 @@ if (!$product_id) {
 $db = (new Database())->getConnection();
 
 // Fetch product details from the database
-$query = "SELECT product_id, name, price, image_path FROM products WHERE product_id = :product_id";
+$query = "SELECT product_id, name, price, products_image_path FROM products WHERE product_id = :product_id";
 $stmt = $db->prepare($query);
 $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
 $stmt->execute();
@@ -34,7 +34,7 @@ if (isset($_SESSION['cart'][$product_id])) {
         'name' => $product['name'],
         'price' => $product['price'],
         'quantity' => 1, // Default quantity
-        'image_path' => $product['image_path']
+        'products_image_path' => $product['products_image_path']
     ];
 }
 
