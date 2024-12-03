@@ -7,14 +7,22 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+echo json_encode($_SESSION['user']);
+
 $cart = $_SESSION['cart'] ?? [];
 $totalAmount = 0;
+$taxRate = 0.13; // Example tax rate (13%)
+$totalPurchases = 0;
 
 if (!empty($cart)) {
     foreach ($cart as $item) {
+        $totalPurchases += $item['quantity'];
         $totalAmount += $item['price'] * $item['quantity'];
     }
 }
+
+$taxAmount = $totalAmount * $taxRate;
+$overallTotal = $totalAmount + $taxAmount;
 
 // Handle form submission for checkout
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -38,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $db->prepare($query);
     $stmt->execute([
         ':user_id' => $_SESSION['user']['id'],
-        ':total_amount' => $totalAmount,
+        ':total_amount' => $overallTotal,
         ':address' => $address,
         ':email' => $email,
         ':mobile_number' => $mobile_number,
@@ -70,65 +78,96 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DesiMart - Checkout</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <?php include 'includes/header.php'; ?>
-    <main class="container">
-        <h1>Checkout</h1>
-        <?php if (empty($cart)): ?>
-            <p>Your cart is empty. <a href="index.php">Start shopping</a>.</p>
-        <?php else: ?>
-            <div class="checkout-summary">
-                <p>Total Amount: <strong>$<?php echo htmlspecialchars(number_format($totalAmount, 2)); ?></strong></p>
+<?php include 'includes/header.php'; ?>
+<main>
+    <div class="container-fluid d-flex ">
+        <div class="row w-100">
+            <h1 class="my-4">Checkout</h1>
+            <!-- Left: Checkout Form -->
+            <div class="col-md-8 d-flex align-items-center justify-content-center">
+                <div class="card shadow-sm rounded border-0 w-100">
+                    <div class="card-body d-flex flex-column" style="max-height: 100%; overflow-y: auto;">
+                        <h2 class="text-center mb-4">Customer's Details</h2>
+                        <form method="POST" class="d-flex flex-column justify-content-between p-4" style="flex-grow: 1; margin-bottom: 40px;">
+                            <div class="form-group col-md-8 mb-3">
+                                <label  class="mb-2" for="first_name">First Name:</label>
+                                <input type="text" name="first_name" id="first_name" class="form-control form-control-lg" required>
+                            </div>
+                            <div class="form-group col-md-8 mb-4">
+                                <label  class="mb-2" for="last_name">Last Name:</label>
+                                <input type="text" name="last_name" id="last_name" class="form-control form-control-lg" required>
+                            </div>
+                            <div class="form-group col-md-8 mb-3">
+                                <label  class="mb-2" for="address">Address:</label>
+                                <textarea name="address" id="address" rows="4" class="form-control form-control-lg" required></textarea>
+                            </div>
+                            <div class="form-group col-md-8 mb-3">
+                                <label  class="mb-2" for="email">Email:</label>
+                                <input type="email" name="email" id="email" class="form-control form-control-lg" required>
+                            </div>
+                            <div class="form-group col-md-8 mb-3">
+                                <label  class="mb-2" for="mobile_number">Mobile Number:</label>
+                                <input type="tel" name="mobile_number" id="mobile_number" class="form-control form-control-lg" pattern="[0-9]{10}" required>
+                            </div>
+                            <div class="form-group col-md-8 mb-3">
+                                <label  class="mb-2" for="country">Country:</label>
+                                <select name="country" id="country" class="form-control form-control-lg" aria-readonly="true" required>
+                                    <option value="">Select Country</option>
+                                    <option value="Canada" selected>Canada</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-8 mb-3">
+                                <label  class="mb-2" for="province">Province:</label>
+                                <select name="province" id="province" class="form-control form-control-lg" required>
+                                    <option value="">Select Province</option>
+                                    <option value="Alberta">Alberta</option>
+                                    <option value="Ontario">Ontario</option>
+                                    <option value="Quebec">Quebec</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-8 mb-3">
+                                <label  class="mb-2" for="city">City:</label>
+                                <input type="text" name="city" id="city" class="form-control form-control-lg" required>
+                            </div>
+                            <div class="form-group col-md-8 mb-3">
+                                <label  class="mb-2" for="pincode">Pincode:</label>
+                                <input type="text" name="pincode" id="pincode" placeholder="A1A 1A1" class="form-control form-control-lg" pattern="[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary col-md-8 btn-lg btn-block mt-3" style="margin-top: auto;">Place Order</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <form method="POST" class="checkout-form">
-                <div class="form-group">
-                    <label for="first_name">First Name:</label>
-                    <input type="text" name="first_name" id="first_name" required>
+
+            <!-- Right: Order Summary -->
+            <div class="col-md-4 d-flex align-items-start justify-content-center">
+                <div class="card shadow-sm rounded border-0 w-100">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4">Order Summary</h2>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Total Products:
+                                <span class="badge badge-secondary"><?php echo $totalPurchases; ?></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Subtotal:
+                                <span class="font-weight-bold">$<?php echo number_format($totalAmount, 2); ?></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Tax (13%):
+                                <span class="font-weight-bold">$<?php echo number_format($taxAmount, 2); ?></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Overall Total:</strong>
+                                <span class="font-weight-bold text-success">$<?php echo number_format($overallTotal, 2); ?></span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="last_name">Last Name:</label>
-                    <input type="text" name="last_name" id="last_name" required>
-                </div>
-                <div class="form-group">
-                    <label for="address">Address:</label>
-                    <textarea name="address" id="address" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" name="email" id="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="mobile_number">Mobile Number:</label>
-                    <input type="tel" name="mobile_number" id="mobile_number" pattern="[0-9]{10}" required>
-                </div>
-                <div class="form-group">
-                    <label for="city">City:</label>
-                    <input type="text" name="city" id="city" required>
-                </div>
-                <div class="form-group">
-                    <label for="province">Province:</label>
-                    <input type="text" name="province" id="province" required>
-                </div>
-                <div class="form-group">
-                    <label for="country">Country:</label>
-                    <input type="text" name="country" id="country" required>
-                </div>
-                <div class="form-group">
-                    <label for="pincode">Pincode:</label>
-                    <input type="text" name="pincode" id="pincode" pattern="[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d" required placeholder="A1A 1A1">
-                </div>
-                <button type="submit" class="btn">Place Order</button>
-            </form>
-        <?php endif; ?>
-    </main>
-    <?php include 'includes/footer.php'; ?>
-</body>
-</html>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<?php include 'includes/footer.php'; ?>
