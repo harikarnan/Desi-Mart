@@ -44,7 +44,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </section>
 
         <!-- Product List -->
-<div class="product-list row">
+<div class="row">
     <?php if (empty($products)): ?>
         <p class="col-12">No products found for the selected category.</p>
     <?php else: ?>
@@ -58,7 +58,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5>
                         <p class="card-text">$<?php echo htmlspecialchars(number_format($product['price'], 2)); ?></p>
                         <a href="product_details.php?id=<?php echo htmlspecialchars($product['product_id']); ?>" 
-                           class="btn btn-primary">View Details</a>
+                           class="primary-btn">View Details</a>
                     </div>
                 </div>
             </div>

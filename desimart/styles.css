@@ -47,7 +47,7 @@ main {
 header {
     background-color: var(--header-bg-color);
     color: var(--black);
-    padding: 1rem;
+    padding: 1rem 2rem;
     text-align: center;
     box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 }
@@ -57,14 +57,16 @@ nav {
     align-items: center;
 }
 
-header nav a {
+.menu {
     color: var(--black);
-    padding: 0 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
     text-decoration: none;
 }
 
-header nav a:hover {
-    text-decoration: underline;
+.menu:hover {
+    background-color: var(--primary-cta-color);
+    color: var(--white);
 }
 
 /* Banner Section */
@@ -234,12 +236,7 @@ header nav a:hover {
 
 
 /* Product List */
-.product-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    
-}
+
 
 .product-item {
     background: var(--white);
@@ -310,8 +307,7 @@ footer {
 
 .container {
     margin: 0 auto;
-    text-align: center;
-    padding: 2rem;
+    padding-bottom: 2rem;
 }
 
 .actions {
@@ -325,12 +321,10 @@ footer {
     display: inline-block;
     background-color: var(--primary-cta-color);
     color: var(--white);
-    padding: 1rem 2rem;
+    padding: 0.8rem 1.5rem;
     border: none;
     text-decoration: none;
     border-radius: 5px;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
     align-self: center;
     font-weight: 600;
 }
@@ -338,11 +332,10 @@ footer {
 .secondary-btn {
     background-color: var(--secondary-cta-bg-color);
     color: var(--secondary-cta-color);
-    padding: 1rem;
+    padding: 0.8rem 1.5rem;
     border: 1px solid var(--secondary-cta-color);
     text-decoration: none;
     border-radius: 5px;
-    font-size: 1rem;
     cursor: pointer;
     display: inline-block;
     text-align: center;
@@ -441,6 +434,10 @@ footer {
     border-radius: 8px;
 }
 
+
+.rem-12{
+    height: 12rem;
+}
 
 
 /* Responsive Design for Smaller Screens */
