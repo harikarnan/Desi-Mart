@@ -20,7 +20,7 @@ $stmt->execute();
 $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Fetch featured products
-$featuredProducts = $product->getAllProducts();
+$featuredProducts = $product->getAllProducts(4);
 ?>
 
 <?php include 'includes/header.php'; ?>
@@ -57,7 +57,7 @@ $featuredProducts = $product->getAllProducts();
 
     <!-- Featured Offers Section -->
     <section class="featured-offers container mt-5">
-        <h2 class="text-center mb-4">One More Offer for You</h2>
+        <h2 class="text-center mb-4">Feature Products: </h2>
         <div class="row gy-4">
             <?php if (empty($featuredProducts)): ?>
                 <p class="text-center">No products available at the moment.</p>
@@ -69,7 +69,7 @@ $featuredProducts = $product->getAllProducts();
                             <div class="card-body text-center">
                                 <h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5>
                                 <p class="card-text text-muted">$<?php echo htmlspecialchars(number_format($product['price'], 2)); ?></p>
-                                <a href="product_details.php?id=<?php echo htmlspecialchars($product['product_id']); ?>" class="btn btn-primary btn-sm">View Details</a>
+                                <a href="product_details.php?id=<?php echo htmlspecialchars($product['product_id']); ?>" class="btn-sm primary-btn ">View Details</a>
                             </div>
                         </div>
                     </div>

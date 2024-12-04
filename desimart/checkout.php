@@ -7,6 +7,17 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+require_once 'classes/States.php';
+
+$states = new States('data/states.json');
+
+$statesArray = $states->getStates();
+
+if (isset($statesList['error'])) {
+    http_response_code(400);
+    die($statesList['error']);
+}
+
 echo json_encode($_SESSION['user']);
 
 $cart = $_SESSION['cart'] ?? [];
@@ -90,47 +101,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <h2 class="text-center mb-4">Customer's Details</h2>
                         <form method="POST" class="d-flex flex-column justify-content-between p-4" style="flex-grow: 1; margin-bottom: 40px;">
                             <div class="form-group col-md-8 mb-3">
-                                <label  class="mb-2" for="first_name">First Name:</label>
+                                <label class="mb-2" for="first_name">First Name:</label>
                                 <input type="text" name="first_name" id="first_name" class="form-control form-control-lg" required>
                             </div>
                             <div class="form-group col-md-8 mb-4">
-                                <label  class="mb-2" for="last_name">Last Name:</label>
+                                <label class="mb-2" for="last_name">Last Name:</label>
                                 <input type="text" name="last_name" id="last_name" class="form-control form-control-lg" required>
                             </div>
                             <div class="form-group col-md-8 mb-3">
-                                <label  class="mb-2" for="address">Address:</label>
+                                <label class="mb-2" for="address">Address:</label>
                                 <textarea name="address" id="address" rows="4" class="form-control form-control-lg" required></textarea>
                             </div>
                             <div class="form-group col-md-8 mb-3">
-                                <label  class="mb-2" for="email">Email:</label>
+                                <label class="mb-2" for="email">Email:</label>
                                 <input type="email" name="email" id="email" class="form-control form-control-lg" required>
                             </div>
                             <div class="form-group col-md-8 mb-3">
-                                <label  class="mb-2" for="mobile_number">Mobile Number:</label>
+                                <label class="mb-2" for="mobile_number">Mobile Number:</label>
                                 <input type="tel" name="mobile_number" id="mobile_number" class="form-control form-control-lg" pattern="[0-9]{10}" required>
                             </div>
                             <div class="form-group col-md-8 mb-3">
-                                <label  class="mb-2" for="country">Country:</label>
+                                <label class="mb-2" for="country">Country:</label>
                                 <select name="country" id="country" class="form-control form-control-lg" aria-readonly="true" required>
                                     <option value="">Select Country</option>
                                     <option value="Canada" selected>Canada</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-8 mb-3">
-                                <label  class="mb-2" for="province">Province:</label>
+                                <label class="mb-2" for="province">Province:</label>
                                 <select name="province" id="province" class="form-control form-control-lg" required>
                                     <option value="">Select Province</option>
-                                    <option value="Alberta">Alberta</option>
-                                    <option value="Ontario">Ontario</option>
-                                    <option value="Quebec">Quebec</option>
+                                    <?php
+                                    foreach ($statesArray as $state) {
+                                        echo "<option value=\"" . htmlspecialchars($state) . "\">" . htmlspecialchars($state) . "</option>";
+                                    }
+                                    ?>
                                 </select>
                             </div>
                             <div class="form-group col-md-8 mb-3">
-                                <label  class="mb-2" for="city">City:</label>
+                                <label class="mb-2" for="city">City:</label>
                                 <input type="text" name="city" id="city" class="form-control form-control-lg" required>
                             </div>
                             <div class="form-group col-md-8 mb-3">
-                                <label  class="mb-2" for="pincode">Pincode:</label>
+                                <label class="mb-2" for="pincode">Pincode:</label>
                                 <input type="text" name="pincode" id="pincode" placeholder="A1A 1A1" class="form-control form-control-lg" pattern="[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d" required>
                             </div>
                             <button type="submit" class="btn btn-primary col-md-8 btn-lg btn-block mt-3" style="margin-top: auto;">Place Order</button>

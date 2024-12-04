@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'email' => $email
         ];
 
-        header('Location: index.php'); // Redirect to homepage
+        header('Location: login.php'); // Redirect to homepage
         exit();
     }
 }

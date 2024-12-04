@@ -105,7 +105,7 @@ $pdf->SetFont('');
 // Second page
 $pdf->AddPage();
 $pdf->SetLink($link);
-$pdf->Image('logo.png',10,12,30,0,'','http://www.fpdf.org');
+$pdf->Image('logo.jpeg',10,12,30,0,'','http://www.fpdf.org');
 $pdf->SetLeftMargin(45);
 $pdf->SetFontSize(14);
 $pdf->WriteHTML($html);
