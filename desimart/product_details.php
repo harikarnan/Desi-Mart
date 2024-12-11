@@ -24,9 +24,37 @@ $product = $stmt->fetch(PDO::FETCH_ASSOC);
 // Fetch featured products
 $featuredProducts = $products->getAllProducts(4);
 
+
 if (!$product) {
     die("Product not found.");
 }
+
+
+// Initialize the cart if not already set
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Handle form submission to add/update cart
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
+    $quantity = max(1, min(8, $quantity)); // Ensure quantity is between 1 and 8
+
+    if (isset($_SESSION['cart'][$product_id])) {
+        $_SESSION['cart'][$product_id]['quantity'] = $quantity; // Update the quantity
+    } else {
+        $_SESSION['cart'][$product_id] = [
+            'name' => $product['name'],
+            'price' => $product['price'],
+            'quantity' => $quantity,
+            'products_image_path' => $product['products_image_path']
+        ];
+    }
+}
+
+// Fetch current quantity in the cart
+$current_quantity = $_SESSION['cart'][$product_id]['quantity'] ?? 0;
+
 ?>
 
 <?php include 'includes/header.php'; ?>
@@ -36,11 +64,16 @@ if (!$product) {
             <div class="col-md-3">
                 <img class="rounded w-100 rem-12" src="<?php echo htmlspecialchars($product['products_image_path']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
             </div>
-            <div class="col-md-8 ">
+            <div class="col-md-8">
                 <h2><?php echo htmlspecialchars($product['name']); ?></h2>
                 <p class="pt-3"><?php echo htmlspecialchars($product['description']); ?></p>
                 <p>Price: $<?php echo htmlspecialchars(number_format($product['price'], 2)); ?></p>
-                <a href="add_to_cart.php?id=<?php echo htmlspecialchars($product['product_id']); ?>" class="primary-btn">Add to Cart</a>
+                <form method="POST">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" id="quantity" name="quantity" value="<?php echo htmlspecialchars($current_quantity > 0 ? $current_quantity : 1); ?>" min="1" max="8">
+                    <button type="submit" class="primary-btn">Add to Cart</button>
+                </form>
+                <a href="cart.php" class="primary-btn mt-3">Go to Cart</a>
             </div>
         </div>
     </section>

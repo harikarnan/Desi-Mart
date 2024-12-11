@@ -15,7 +15,9 @@ class Product
     public function getAllProducts($limit = null)
     {
         if (isset($limit)) {
-            $query = "SELECT product_id, name, price, products_image_path, description FROM products LIMIT :limit";
+            $query = "SELECT product_id, name, price, products_image_path, description FROM products 
+            ORDER BY RAND()
+            LIMIT :limit";
             $stmt = $this->db->prepare($query);
             $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
             $stmt->execute();
