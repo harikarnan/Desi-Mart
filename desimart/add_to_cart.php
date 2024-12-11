@@ -2,7 +2,9 @@
 session_start();
 require_once 'db.php';
 
-$product_id = $_GET['id'] ?? null;
+$product_id = $_POST['product_id'] ?? null;
+$quantity = $_POST['quantity'] ?? 1;
+
 if (!$product_id) {
     die("Invalid product ID.");
 }
@@ -27,7 +29,7 @@ if (!isset($_SESSION['cart'])) {
 
 // Check if the product is already in the cart
 if (isset($_SESSION['cart'][$product_id])) {
-    $_SESSION['cart'][$product_id]['quantity'] += 1; // Increment quantity
+    $_SESSION['cart'][$product_id]['quantity'] = min(8, $_SESSION['cart'][$product_id]['quantity'] + $quantity); // Increment quantity
 } else {
     // Add new product to the cart
     $_SESSION['cart'][$product_id] = [
@@ -38,6 +40,7 @@ if (isset($_SESSION['cart'][$product_id])) {
     ];
 }
 
-header('Location: cart.php'); // Redirect to cart page
+header('Location: product_details.php'); // Redirect back to product_details page
+
 exit();
 ?>

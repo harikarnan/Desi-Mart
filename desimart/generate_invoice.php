@@ -44,7 +44,7 @@ $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial', 'B', 16);
 
-$pdf->Image('images/logo.png', 90, 10, 30, 0);
+$pdf->Image('images/logo.jpeg', 90, 10, 30, 0);
 $pdf->Ln(35);
 $pdf->Cell(0, 10, 'Invoice', 0, 1, 'C');
 $pdf->Ln(10);
