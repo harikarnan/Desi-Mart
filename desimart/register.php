@@ -79,12 +79,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
 
         // Automatically log in the user after registration
-        $userId = $db->lastInsertId();
-        $_SESSION['user'] = [
-            'id' => $userId,
-            'name' => $name,
-            'email' => $email
-        ];
+        // $userId = $db->lastInsertId();
+        // $_SESSION['user'] = [
+        //     'id' => $userId,
+        //     'name' => $name,
+        //     'email' => $email
+        // ];
 
         header('Location: login.php'); // Redirect to homepage
         exit();
