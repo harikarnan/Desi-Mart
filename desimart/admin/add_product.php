@@ -9,6 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $price = $_POST['price'];
     $category_id = $_POST['category_id'];
+    $description = $_POST['description'];
 
     // Handle image upload
     $image_path = null;
@@ -27,8 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Insert product if no errors
     if (!isset($error)) {
-        $stmt = $db->prepare("INSERT INTO products (name, price, category_id, products_image_path) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("sdis", $name, $price, $category_id, $image_path); // Corrected type definition string
+        $stmt = $db->prepare("INSERT INTO products (name, price, category_id, products_image_path, description) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sdiss", $name, $price, $category_id, $image_path, $description);
 
         if ($stmt->execute()) {
             header("Location: products.php");
@@ -72,6 +73,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="mb-3">
             <label for="image" class="form-label">Product Image</label>
             <input type="file" name="image" id="image" class="form-control" accept="image/*">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" id="description" class="form-control" rows="4" placeholder="Enter product description" required></textarea>
         </div>
         <button type="submit" class="btn btn-primary w-100">Add Product</button>
     </form>

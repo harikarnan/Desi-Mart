@@ -25,10 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $price = $_POST['price'];
     $category_id = $_POST['category_id'];
+    $description = $_POST['description'];
 
     // Handle product update
-    $stmt = $db->prepare("UPDATE products SET name = ?, price = ?, category_id = ? WHERE product_id = ?");
-    $stmt->bind_param("sdii", $name, $price, $category_id, $id);
+    $stmt = $db->prepare("UPDATE products SET name = ?, price = ?, category_id = ?, description = ? WHERE product_id = ?");
+    $stmt->bind_param("sdisi", $name, $price, $category_id, $description, $id);
 
     if ($stmt->execute()) {
         header("Location: products.php");
@@ -68,6 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </option>
                 <?php endwhile; ?>
             </select>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" id="description" class="form-control" rows="4" required><?= htmlspecialchars($product['description']) ?></textarea>
         </div>
         <button type="submit" class="btn btn-primary w-100">Update Product</button>
     </form>
