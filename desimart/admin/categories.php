@@ -22,6 +22,7 @@ $categories = $stmt->fetch_all(MYSQLI_ASSOC);
                 <tr>
                     <th>Category ID</th>
                     <th>Category Name</th>
+                    <th>Image</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -29,7 +30,14 @@ $categories = $stmt->fetch_all(MYSQLI_ASSOC);
                 <?php foreach ($categories as $category): ?>
                     <tr>
                         <td><?= $category['category_id'] ?></td>
-                        <td><?= $category['name'] ?></td>
+                        <td><?= htmlspecialchars($category['name']) ?></td>
+                        <td>
+                            <?php if (!empty($category['categories_image_path'])): ?>
+                                <img src="../<?= $category['categories_image_path'] ?>" alt="<?= htmlspecialchars($category['name']) ?>" style="width: 50px; height: auto;">
+                            <?php else: ?>
+                                <p>No Image</p>
+                            <?php endif; ?>
+                        </td>
                         <td>
                             <a href="./edit_category.php?id=<?= $category['category_id'] ?>" class="btn btn-warning btn-sm">Edit</a>
                             <a href="./delete_category.php?id=<?= $category['category_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this category?');">Delete</a>

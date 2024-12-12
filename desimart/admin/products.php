@@ -4,7 +4,7 @@ require_once './admin_auth.php'; // Authentication middleware
 
 // Fetch all products in ascending order of product_id
 $stmt = $db->prepare("
-    SELECT products.product_id, products.name, products.price, categories.name AS category
+    SELECT products.product_id, products.name, products.price, products.products_image_path, categories.name AS category
     FROM products
     INNER JOIN categories ON products.category_id = categories.category_id
     ORDER BY products.product_id ASC
@@ -32,6 +32,7 @@ $result = $stmt->get_result();
                     <th>Name</th>
                     <th>Price</th>
                     <th>Category</th>
+                    <th>Image</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -42,6 +43,13 @@ $result = $stmt->get_result();
                     <td><?= htmlspecialchars($row['name']) ?></td>
                     <td>$<?= number_format($row['price'], 2) ?></td>
                     <td><?= htmlspecialchars($row['category']) ?></td>
+                    <td>
+                        <?php if (!empty($row['products_image_path'])): ?>
+                            <img src="../<?= htmlspecialchars($row['products_image_path']) ?>" alt="<?= htmlspecialchars($row['name']) ?>" style="width: 50px; height: auto;">
+                        <?php else: ?>
+                            <p>No Image</p>
+                        <?php endif; ?>
+                    </td>
                     <td>
                         <a href="edit_product.php?id=<?= $row['product_id'] ?>" class="btn btn-warning btn-sm">Edit</a>
                         <a href="delete_product.php?id=<?= $row['product_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>

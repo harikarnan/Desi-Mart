@@ -2,15 +2,16 @@
 require_once 'includes/db.php';
 require_once 'admin_auth.php';
 
-// Fetch categories
-$categoriesStmt = $db->query("SELECT * FROM categories");
+// Fetch categories in ascending order of category_id
+$categoriesStmt = $db->query("SELECT * FROM categories ORDER BY category_id ASC");
 $categories = $categoriesStmt->fetch_all(MYSQLI_ASSOC);
 
-// Fetch products
+// Fetch products in ascending order of product_id
 $productsStmt = $db->query("
     SELECT products.product_id, products.name, products.price, products.products_image_path, categories.name AS category 
     FROM products 
     INNER JOIN categories ON products.category_id = categories.category_id
+    ORDER BY products.product_id ASC
 ");
 $products = $productsStmt->fetch_all(MYSQLI_ASSOC);
 ?>
@@ -29,13 +30,21 @@ $products = $productsStmt->fetch_all(MYSQLI_ASSOC);
                     <tr>
                         <th>Category ID</th>
                         <th>Name</th>
+                        <th>Image</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($categories as $category): ?>
                         <tr>
                             <td><?= $category['category_id'] ?></td>
-                            <td><?= $category['name'] ?></td>
+                            <td><?= htmlspecialchars($category['name']) ?></td>
+                            <td>
+                                <?php if (!empty($category['categories_image_path'])): ?>
+                                    <img src="../<?= $category['categories_image_path'] ?>" alt="<?= $category['name'] ?>" style="width: 50px; height: auto;">
+                                <?php else: ?>
+                                    <p>No Image</p>
+                                <?php endif; ?>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -63,9 +72,9 @@ $products = $productsStmt->fetch_all(MYSQLI_ASSOC);
                     <?php foreach ($products as $product): ?>
                         <tr>
                             <td><?= $product['product_id'] ?></td>
-                            <td><?= $product['name'] ?></td>
+                            <td><?= htmlspecialchars($product['name']) ?></td>
                             <td>$<?= number_format($product['price'], 2) ?></td>
-                            <td><?= $product['category'] ?></td>
+                            <td><?= htmlspecialchars($product['category']) ?></td>
                             <td>
                                 <?php if (!empty($product['products_image_path'])): ?>
                                     <img src="../<?= $product['products_image_path'] ?>" alt="<?= $product['name'] ?>" style="width: 50px; height: auto;">

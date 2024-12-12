@@ -11,11 +11,31 @@ if (!$id || !is_numeric($id)) {
     exit();
 }
 
-// Prepare the delete query
+// Fetch the category details to get the image path
+$stmt = $db->prepare("SELECT categories_image_path FROM categories WHERE category_id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$category = $result->fetch_assoc();
+
+// Check if the category exists
+if (!$category) {
+    header("Location: categories.php");
+    exit();
+}
+
+// Delete the image file if it exists
+if (!empty($category['categories_image_path'])) {
+    $image_path = "../" . $category['categories_image_path']; // Construct the full path to the image
+    if (file_exists($image_path)) {
+        unlink($image_path); // Delete the image file
+    }
+}
+
+// Prepare and execute the delete query
 $stmt = $db->prepare("DELETE FROM categories WHERE category_id = ?");
 $stmt->bind_param("i", $id);
 
-// Execute the query and handle the result
 if ($stmt->execute()) {
     header("Location: categories.php");
     exit();
