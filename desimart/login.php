@@ -71,15 +71,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1>Welcome to DesiMart</h1>
         <h2>Login</h2>
         <?php if (!empty($error)): ?>
-            <div class="alert alert-danger">
-                <strong>Please fix the following errors:</strong>
-                <ul>
-                    <?php foreach ($error as $err): ?>
-                        <li><?php echo htmlspecialchars($err); ?></li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        <?php endif; ?>
+    <div class="alert alert-danger">
+        <strong>Please fix the following errors:</strong>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <?php foreach ($error as $err): ?>
+                <li><?php echo htmlspecialchars($err); ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
         <form method="POST">
             <div class="form-group">
                 <label for="email">Email:</label>

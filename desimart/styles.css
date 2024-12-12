@@ -267,7 +267,7 @@ nav {
 
 .card {
     border: 1px solid #ddd;
-    border-radius: 10px;
+    border-radius: auto;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
 }
@@ -448,11 +448,6 @@ form .d-flex {
 form .form-control {
     height: 38px; 
     flex: 1;
-}
-
-form .btn {
-    height: 38px;
-    padding: 0.5rem 1rem; 
 }
 
 
