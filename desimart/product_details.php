@@ -68,10 +68,12 @@ $current_quantity = $_SESSION['cart'][$product_id]['quantity'] ?? 0;
                 <h2><?php echo htmlspecialchars($product['name']); ?></h2>
                 <p class="pt-3"><?php echo htmlspecialchars($product['description']); ?></p>
                 <p>Price: $<?php echo htmlspecialchars(number_format($product['price'], 2)); ?></p>
-                <form method="POST">
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" name="quantity" value="<?php echo htmlspecialchars($current_quantity > 0 ? $current_quantity : 1); ?>" min="1" max="8">
-                    <button type="submit" class="primary-btn">Add to Cart</button>
+                <form method="POST" class="mb-2">
+                <div class="d-flex align-items-center gap-2">
+                    <label for="quantity" class="form-label mb-0">Quantity:</label>
+                    <input type="number" id="quantity" name="quantity" class="form-control w-50" value="<?php echo htmlspecialchars($current_quantity > 0 ? $current_quantity : 1); ?>" min="1" max="8">
+                    <button type="submit" class="btn btn-info btn-block">Add to Cart</button>
+                    </div>
                 </form>
                 <a href="cart.php" class="primary-btn mt-3">Go to Cart</a>
             </div>
