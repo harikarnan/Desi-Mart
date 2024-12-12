@@ -54,7 +54,7 @@ $pdf->Cell(0, 10, "Order ID: {$order['order_id']}", 0, 1);
 $pdf->Cell(0, 10, "Customer: {$order['name']}", 0, 1);
 $pdf->Cell(0, 10, "Email: {$order['email']}", 0, 1);
 $pdf->Cell(0, 10, "Mobile: {$order['mobile_number']}", 0, 1);
-$pdf->Cell(0, 10, "Address: {$order['address']}, City: {$order['city']}, Province: {$order['province']}, Country: {$order['country']}, Pincode: {$order['pincode']}", 0, 1);
+$pdf->Cell(0, 10, "Address: {$order['address']} {$order['city']} {$order['province']} {$order['country']} {$order['pincode']}", 0, 1);
 $pdf->Cell(0, 10, "Order Date: {$order['order_date']}", 0, 1);
 $pdf->Ln(10);
 

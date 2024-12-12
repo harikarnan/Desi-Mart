@@ -39,7 +39,7 @@ body {
 }
 
 main {
-    flex: 1;
+    /* flex: 1; */
     padding: 2rem;
 }
 
@@ -445,10 +445,6 @@ form .d-flex {
     gap: 1rem; 
 }
 
-form .form-control {
-    height: 38px; 
-    flex: 1;
-}
 
 
 

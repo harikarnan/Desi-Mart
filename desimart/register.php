@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (strlen($name) > 50) {
         $errors['name'] = "Name cannot exceed 50 characters.";
         $valid = false;
-    } elseif (!preg_match("/^[a-zA-Z]+$/", $name)) {
+    } elseif (!preg_match("/^[a-zA-Z ]+$/", $name)) {
         $errors['name'] = "Name must contain only alphabetic characters.";
         $valid = false;
     }
@@ -70,21 +70,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // If the form is valid, proceed with registration
     if ($valid) {
         // Insert new user into the database
-        $query = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
+        $role = 'user';
+        $query = "INSERT INTO users (name, email, password, role) VALUES (:name, :email, :password, :role)";
         $stmt = $db->prepare($query);
         $stmt->execute([
             ':name' => $name,
             ':email' => $email,
-            ':password' => $hashedPassword
+            ':password' => $hashedPassword,
+            ':role' => $role,
         ]);
-
-        // Automatically log in the user after registration
-        // $userId = $db->lastInsertId();
-        // $_SESSION['user'] = [
-        //     'id' => $userId,
-        //     'name' => $name,
-        //     'email' => $email
-        // ];
 
         header('Location: login.php'); // Redirect to homepage
         exit();
@@ -110,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="POST">
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input type="text" name="name" id="name" class="form-control <?php echo isset($errors['name']) ? 'is-invalid' : ''; ?>" value="<?php echo htmlspecialchars($name ?? ''); ?>" required maxlength="50" pattern="[A-Za-z]+" title="Name must contain only alphabetic characters.">
+                <input type="text" name="name" id="name" class="form-control <?php echo isset($errors['name']) ? 'is-invalid' : ''; ?>" value="<?php echo htmlspecialchars($name ?? ''); ?>" required maxlength="50" pattern="[A-Za-z ]+" title="Name must contain only alphabetic characters.">
                 <?php if (isset($errors['name'])): ?>
                     <div class="invalid-feedback"><?php echo $errors['name']; ?></div>
                 <?php endif; ?>

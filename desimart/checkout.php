@@ -61,19 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (strlen($name) > 50) {
         $errors['name'] = "Name cannot exceed 50 characters.";
         $valid = false;
-    } elseif (!preg_match("/^[a-zA-Z]+$/", $name)) {
+    } elseif (!preg_match("/^[a-zA-Z ]+$/", $name)) {
         $errors['name'] = "Name must contain only alphabetic characters.";
         $valid = false;
     }
 
-    if (empty($address)) {
-        $errors['address'] = "Address is required.";
-        $valid = false;
-    } elseif (strlen($address) > 100) {
-        $errors['address'] = "Address cannot exceed 100 characters.";
-        $valid = false;
-    }
-
+    
     if (empty($city)) {
         $errors['city'] = "City is required.";
         $valid = false;
@@ -81,20 +74,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['city'] = "City cannot exceed 50 characters.";
         $valid = false;
     }
-
+    
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors['email'] = "Please provide a valid email address.";
         $valid = false;
     }
-
+    
     // Validate mobile number server-side
     if (empty($mobile_number)) {
         $errors['mobile_number'] = "Mobile number is required.";
     } elseif (!preg_match('/^\d{10}$/', $mobile_number)) {
         $errors['mobile_number'] = "Invalid mobile number. It must contain exactly 10 digits.";
     }
-
-
+    
+    if (empty($address)) {
+        $errors['address'] = "Address is required.";
+        $valid = false;
+    } elseif (strlen($address) > 100) {
+        $errors['address'] = "Address cannot exceed 100 characters.";
+        $valid = false;
+    }
+    
     if (empty($province)) {
         $errors['province'] = "Province is required.";
         $valid = false;
@@ -197,38 +197,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label for="name" class="mb-2">Full Name:</label>
                                 <input type="text" name="name" id="name"
                                     class="form-control form-control-lg <?php echo isset($errors['name']) ? 'is-invalid' : ''; ?>"
-                                    value="<?php echo $user_name; ?>" required maxlength="50" pattern="[A-Za-z]+"
-                                    title="Name must contain only alphabetic characters and be less than 50 characters.">
+                                    value="<?php echo $user_name; ?>" required maxlength="50" pattern="[A-Za-z ]+"
+                                    title="Name must contain only alphabetic characters and be less than 50 characters." readonly>
                                 <?php if (isset($errors['name'])): ?>
                                     <div class="invalid-feedback"><?php echo $errors['name']; ?></div>
                                 <?php endif; ?>
                             </div>
 
-                            <!-- Address -->
-                            <div class="form-group mb-3">
-                                <label for="address" class="mb-2">Address:</label>
-                                <textarea name="address" id="address" rows="4" class="form-control form-control-lg <?php echo isset($errors['address']) ? 'is-invalid' : (isset($address) ? 'is-valid' : ''); ?>" required maxlength="100"><?php echo htmlspecialchars($address ?? ''); ?></textarea>
-                                <?php if (isset($errors['address'])): ?>
-                                    <div class="invalid-feedback"><?php echo $errors['address']; ?></div>
-                                <?php endif; ?>
-                            </div>
-
+                            
                             <!-- Email -->
                             <div class="form-group mb-3">
                                 <label for="email" class="mb-2">Email:</label>
                                 <input type="email" name="email" id="email"
-                                    class="form-control form-control-lg <?php echo isset($errors['email']) ? 'is-invalid' : ''; ?>"
-                                    value="<?php echo $user_email; ?>" required readonly>
+                                class="form-control form-control-lg <?php echo isset($errors['email']) ? 'is-invalid' : ''; ?>"
+                                value="<?php echo $user_email; ?>" required readonly>
                                 <?php if (isset($errors['email'])): ?>
                                     <div class="invalid-feedback"><?php echo $errors['email']; ?></div>
                                 <?php endif; ?>
                             </div>
-
+                            
                             <!-- Mobile Number -->
                             <div class="form-group mb-3">
                                 <label for="mobile_number" class="mb-2">Mobile Number:</label>
                                 <input type="text"
-                                    name="mobile_number"
+                                name="mobile_number"
                                     id="mobile_number"
                                     class="form-control form-control-lg <?php echo isset($errors['mobile_number']) ? 'is-invalid' : (isset($mobile_number) ? 'is-valid' : ''); ?>"
                                     value="<?php echo htmlspecialchars($mobile_number ?? ''); ?>"
@@ -241,8 +233,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="invalid-feedback"><?php echo $errors['mobile_number']; ?></div>
                                 <?php endif; ?>
                             </div>
-
-
+                            
+                            <!-- Address -->
+                            <div class="form-group mb-3">
+                                <label for="address" class="mb-2">Address Line 1:</label>
+                                <textarea name="address" id="address" rows="4" class="form-control form-control-lg <?php echo isset($errors['address']) ? 'is-invalid' : (isset($address) ? 'is-valid' : ''); ?>" required maxlength="100"><?php echo htmlspecialchars($address ?? ''); ?></textarea>
+                                <?php if (isset($errors['address'])): ?>
+                                    <div class="invalid-feedback"><?php echo $errors['address']; ?></div>
+                                <?php endif; ?>
+                            </div>
+                            
                             <!-- City -->
                             <div class="form-group mb-3">
                                 <label for="city" class="mb-2">City:</label>
@@ -293,7 +293,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
 
 
-                            <button type="submit" class="btn btn-primary col-md-4 btn-lg mx-auto mt-3">Place Order</button>
+                            <button type="submit" class="primary-btn col-md-4 btn-lg mx-auto mt-3">Place Order</button>
                         </form>
                     </div>
                 </div>
