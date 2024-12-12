@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // If valid, check password with stored hash and log the user in
-    if ($valid && $user && password_verify($password, $user['password'])) {
+    if ($valid && $user && password_verify($password, $user['password'])  && $user['role'] == 'user') {
         $_SESSION['user'] = [
             'id' => $user['user_id'],
             'name' => $user['name'],

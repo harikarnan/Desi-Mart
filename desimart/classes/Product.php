@@ -44,14 +44,13 @@ class Product
     // Add a new product
     public function addProduct($data)
     {
-        $query = "INSERT INTO products (name, category_id, price, stock_quantity, description, products_image_path) 
-                  VALUES (:name, :category_id, :price, :stock_quantity, :description, :products_image_path)";
+        $query = "INSERT INTO products (name, category_id, price, description, products_image_path) 
+                  VALUES (:name, :category_id, :price,  :description, :products_image_path)";
         $stmt = $this->db->prepare($query);
         $stmt->execute([
             ':name' => $data['name'],
             ':category_id' => $data['category_id'],
             ':price' => $data['price'],
-            ':stock_quantity' => $data['stock_quantity'],
             ':description' => $data['description'],
             ':products_image_path' => $data['products_image_path']
         ]);

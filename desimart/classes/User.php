@@ -7,12 +7,14 @@ class User {
     }
 
     public function register($data) {
-        $query = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
+        $role = 'user';
+        $query = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password, :role)";
         $stmt = $this->db->prepare($query);
         $stmt->execute([
             ':name' => $data['name'],
             ':email' => $data['email'],
-            ':password' => password_hash($data['password'], PASSWORD_BCRYPT)
+            ':password' => password_hash($data['password'], PASSWORD_BCRYPT),
+            ':role' => $role
         ]);
     }    
 
@@ -23,7 +25,7 @@ class User {
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && password_verify($password, $user['password'])) {
+        if ($user && password_verify($password, $user['password']) && $user['role'] == 'user') {
             return $user;
         }
         return false;
