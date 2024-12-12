@@ -44,7 +44,10 @@ $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial', 'B', 16);
 
+$pdf->Image('images/logo.jpeg', 90, 10, 30, 0);
+$pdf->Ln(35);
 $pdf->Cell(0, 10, 'Invoice', 0, 1, 'C');
+$pdf->Ln(10);
 $pdf->SetFont('Arial', '', 12);
 
 $pdf->Cell(0, 10, "Order ID: {$order['order_id']}", 0, 1);
@@ -71,6 +74,7 @@ foreach ($orderItems as $item) {
 }
 
 $pdf->Ln();
+$pdf->Cell(0, 10, "Tax (13%): $" . number_format($total*0.13, 2), 0, 1, 'R');
 $pdf->Cell(0, 10, "Grand Total: $" . number_format($order['total_amount'], 2), 0, 1, 'R');
 
 // Save PDF to file
