@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (!empty($errors)): ?>
             <div class="alert alert-danger">
                 <strong>Please fix the following errors:</strong>
-                <ul>
+                <ul style="list-style-type: none; padding-left: 0;">
                     <?php foreach ($errors as $error): ?>
                         <li><?php echo htmlspecialchars($error); ?></li>
                     <?php endforeach; ?>

@@ -60,12 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php foreach ($cart as $product_id => $item): ?>
                 <div class="col-md-6 col-lg-4">
                     <div class="card shadow-sm border">
-                        <div class="card-img-top d-flex justify-content-center align-items-center bg-light" style="height: 200px;">
+                        <div class="card-img-top d-flex justify-content-center align-items-center bg-light" style="height: 250px;">
                             <img 
                                 src="<?php echo htmlspecialchars($item['products_image_path'] ?: 'images/placeholder.png'); ?>" 
                                 alt="<?php echo htmlspecialchars($item['name']); ?>" 
-                                class="img-fluid" 
-                                style="max-height: 180px; width: auto;">
+                                class="img-fluid w-100 h-100 rounded" >
                         </div>
                         <div class="card-body text-start">
                             <h5 class="card-title"><?php echo htmlspecialchars($item['name']); ?></h5>
