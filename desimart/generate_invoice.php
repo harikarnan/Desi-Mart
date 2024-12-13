@@ -66,8 +66,12 @@ $pdf->Ln();
 
 $pdf->SetFont('Arial', '', 12);
 
+
+$totalOrderAmount = 0;
 foreach ($orderItems as $item) {
     $total = $item['quantity'] * $item['price'];
+    $totalOrderAmount += $total;
+
     $pdf->Cell(100, 10, $item['name'], 1);
     $pdf->Cell(20, 10, $item['quantity'], 1);
     $pdf->Cell(30, 10, "$" . number_format($item['price'], 2), 1);
@@ -77,7 +81,7 @@ foreach ($orderItems as $item) {
 
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Ln();
-$pdf->Cell(0, 10, "Tax (13%): $" . number_format($total*0.13, 2), 0, 1, 'R');
+$pdf->Cell(0, 10, "Tax (13%): $" . number_format($totalOrderAmount*0.13, 2), 0, 1, 'R');
 $pdf->Cell(0, 10, "Grand Total: $" . number_format($order['total_amount'], 2), 0, 1, 'R');
 
 // Save PDF to file
