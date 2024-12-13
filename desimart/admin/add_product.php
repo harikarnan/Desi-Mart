@@ -1,16 +1,20 @@
 <?php
 require_once './includes/db.php'; // Database connection
 require_once './admin_auth.php'; // Authentication middleware
+require_once '../classes/Sanitizer.php';
+
+
+$sanitize_input = new Sanitizer();
 
 // Fetch categories for the dropdown
 $categories = $db->query("SELECT * FROM categories");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form data
-    $name = $_POST['name'];
-    $price = $_POST['price'];
-    $category_id = $_POST['category_id'];
-    $description = $_POST['description'];
+    $name = $sanitize_input->sanitize_input($_POST['name']);
+    $price = $sanitize_input->sanitize_input($_POST['price']);
+    $category_id = $sanitize_input->sanitize_input($_POST['category_id']);
+    $description = $sanitize_input->sanitize_input($_POST['description']);
 
     // Validate product name (max 30 characters, letters and spaces only)
     if (!preg_match("/^[A-Za-z\s]{1,30}$/", $name)) {
@@ -99,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="mb-3">
             <label for="description" class="form-label fw-bold">Description</label>
-            <textarea name="description" id="description" class="form-control" rows="4" placeholder="Enter product description" required maxlength="100"></textarea>
+            <textarea name="description" id="description" class="form-control" rows="4" placeholder="Enter product description" required maxlength="350"></textarea>
         </div>
 
         <div class="button-container">

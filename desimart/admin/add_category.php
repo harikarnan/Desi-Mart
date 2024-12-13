@@ -1,11 +1,15 @@
 <?php
 require_once './includes/db.php'; // Database connection
 require_once './admin_auth.php'; // Authentication middleware
+require_once '../classes/Sanitizer.php';
+
+
+$sanitize_input = new Sanitizer();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get and sanitize form data
-    $name = trim($_POST['name']);
-    $image = $_FILES['image'];
+    $name = $sanitize_input->sanitize_input($_POST['name']);
+    $image = $sanitize_input->sanitize_input($_FILES['image']);
 
     // Validate category name with regex (only letters and spaces)
     if (!preg_match("/^[A-Za-z\s]+$/", $name)) {
