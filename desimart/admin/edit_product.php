@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once './includes/db.php'; // Database connection
 require_once './admin_auth.php'; // Authentication middleware
 
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php require_once './includes/header.php'; ?>
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Edit Product</h2>
+    <h2 class="text-center mb-4" style="color: #A1351B;">Edit Product</h2>
 
     <!-- Error Message -->
     <?php if (isset($error)): ?>
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="description" class="form-label">Description</label>
             <textarea name="description" id="description" class="form-control" rows="4" required><?= htmlspecialchars($product['description']) ?></textarea>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Update Product</button>
+        <button type="submit" class="btn w-100" style="background-color: #A1351B; color: #fff;">Update Product</button>
     </form>
 
     <!-- Back to Products Button -->

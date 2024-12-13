@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php require_once './includes/header.php'; ?>
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Edit Category</h2>
+    <h2 class="text-center mb-4" style="color: #A1351B;">Edit Category</h2>
 
     <!-- Error Message -->
     <?php if (isset($error)): ?>
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="name" class="form-label">Category Name</label>
             <input type="text" name="name" id="name" class="form-control" value="<?= htmlspecialchars($category['name']) ?>" required>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Update Category</button>
+        <button type="submit" class="btn w-100" style="background-color: #A1351B; color: #fff;">Update Category</button>
     </form>
 
     <!-- Back to Categories Button -->
