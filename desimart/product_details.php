@@ -88,7 +88,7 @@ $current_quantity = $_SESSION['cart'][$product_id]['quantity'] ?? 0;
 
         <div class="row align-items-center">
             <div class="col-md-3">
-                <img class="rounded w-100 rem-12" src="<?php echo htmlspecialchars($product['products_image_path']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+                <img class="rounded w-100 rem-12" src="<?php echo htmlspecialchars($product['products_image_path']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" style="object-fit: cover;">
             </div>
             <div class="col-md-8">
                 <h2><?php echo htmlspecialchars($product['name']); ?></h2>
