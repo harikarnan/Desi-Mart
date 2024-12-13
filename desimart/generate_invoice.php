@@ -48,7 +48,7 @@ $pdf->Image('images/logo.jpeg', 90, 10, 30, 0);
 $pdf->Ln(35);
 $pdf->Cell(0, 10, 'Invoice', 0, 1, 'C');
 $pdf->Ln(10);
-$pdf->SetFont('Arial', '', 12);
+$pdf->SetFont('Arial', 'B', 12);
 
 $pdf->Cell(0, 10, "Order ID: {$order['order_id']}", 0, 1);
 $pdf->Cell(0, 10, "Customer: {$order['name']}", 0, 1);
@@ -58,23 +58,30 @@ $pdf->Cell(0, 10, "Address: {$order['address']} {$order['city']} {$order['provin
 $pdf->Cell(0, 10, "Order Date: {$order['order_date']}", 0, 1);
 $pdf->Ln(10);
 
-$pdf->Cell(60, 10, 'Product', 1);
-$pdf->Cell(30, 10, 'Quantity', 1);
+$pdf->Cell(100, 10, 'Product', 1);
+$pdf->Cell(20, 10, 'Quantity', 1);
 $pdf->Cell(30, 10, 'Price', 1);
-$pdf->Cell(30, 10, 'Total', 1);
+$pdf->Cell(40, 10, 'Total', 1);
 $pdf->Ln();
 
+$pdf->SetFont('Arial', '', 12);
+
+
+$totalOrderAmount = 0;
 foreach ($orderItems as $item) {
     $total = $item['quantity'] * $item['price'];
-    $pdf->Cell(60, 10, $item['name'], 1);
-    $pdf->Cell(30, 10, $item['quantity'], 1);
+    $totalOrderAmount += $total;
+
+    $pdf->Cell(100, 10, $item['name'], 1);
+    $pdf->Cell(20, 10, $item['quantity'], 1);
     $pdf->Cell(30, 10, "$" . number_format($item['price'], 2), 1);
-    $pdf->Cell(30, 10, "$" . number_format($total, 2), 1);
+    $pdf->Cell(40, 10, "$" . number_format($total, 2), 1);
     $pdf->Ln();
 }
 
+$pdf->SetFont('Arial', 'B', 12);
 $pdf->Ln();
-$pdf->Cell(0, 10, "Tax (13%): $" . number_format($total*0.13, 2), 0, 1, 'R');
+$pdf->Cell(0, 10, "Tax (13%): $" . number_format($totalOrderAmount*0.13, 2), 0, 1, 'R');
 $pdf->Cell(0, 10, "Grand Total: $" . number_format($order['total_amount'], 2), 0, 1, 'R');
 
 // Save PDF to file

@@ -1,6 +1,10 @@
 <?php 
 require_once './includes/db.php'; // Database connection
 require_once './admin_auth.php'; // Authentication middleware
+require_once '../classes/Sanitizer.php';
+
+
+$sanitize_input = new Sanitizer();
 
 // Get product ID from query parameters
 $id = $_GET['id'] ?? null;
@@ -22,10 +26,10 @@ if (!$product) {
 $categories = $db->query("SELECT * FROM categories");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'];
-    $price = $_POST['price'];
-    $category_id = $_POST['category_id'];
-    $description = $_POST['description'];
+    $name = $sanitize_input->sanitize_input($_POST['name']);
+    $price = $sanitize_input->sanitize_input($_POST['price']);
+    $category_id = $sanitize_input->sanitize_input($_POST['category_id']);
+    $description = $sanitize_input->sanitize_input($_POST['description']);
 
     // Handle product update
     $stmt = $db->prepare("UPDATE products SET name = ?, price = ?, category_id = ?, description = ? WHERE product_id = ?");
@@ -72,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea name="description" id="description" class="form-control" rows="4" required><?= htmlspecialchars($product['description']) ?></textarea>
+            <textarea name="description" id="description" class="form-control" rows="4" maxlength="350" required><?= htmlspecialchars($product['description']) ?></textarea>
         </div>
         <button type="submit" class="btn w-100" style="background-color: #A1351B; color: #fff;">Update Product</button>
     </form>

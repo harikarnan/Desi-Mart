@@ -1,6 +1,10 @@
 <?php
 require_once './includes/db.php'; // Database connection
 require_once './admin_auth.php'; // Authentication middleware
+require_once '../classes/Sanitizer.php';
+
+
+$sanitize_input = new Sanitizer();
 
 // Get category ID from query parameters
 $id = $_GET['id'] ?? null;
@@ -19,7 +23,7 @@ if (!$category) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'];
+    $name = $sanitize_input->sanitize_input($_POST['name']);
 
     // Update category
     $stmt = $db->prepare("UPDATE categories SET name = ? WHERE category_id = ?");
