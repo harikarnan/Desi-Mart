@@ -9,17 +9,17 @@ $sanitize_input = new Sanitizer();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get and sanitize form data
     $name = $sanitize_input->sanitize_input($_POST['name']);
-    $image = $sanitize_input->sanitize_input($_FILES['image']);
+    $image = $_FILES['image'];
 
     // Validate category name with regex (only letters and spaces)
-    if (!preg_match("/^[A-Za-z\s]+$/", $name)) {
+    if (!preg_match("/^[A-Za-z \s]+$/", $name)) {
         echo "<p style='color: red;'>Error: Category name can only contain letters and spaces.</p>";
     } else {
         // Handle image upload
         $image_path = null;
-        if (!empty($image['name'])) {
+        if (!empty( $sanitize_input->sanitize_input($image['name'])) ) {
             $target_dir = "../images/categories/";
-            $image_name = basename($image['name']);
+            $image_name = basename( $sanitize_input->sanitize_input($image['name']));
             $target_file = $target_dir . $image_name;
 
             // Validate and move the uploaded file
