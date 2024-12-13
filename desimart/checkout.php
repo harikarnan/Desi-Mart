@@ -9,6 +9,10 @@ if (!isset($_SESSION['user'])) {
 
 require_once 'classes/States.php';
 
+require 'classes/Sanitizer.php';
+
+$sanitize_input = new Sanitizer();
+
 $states = new States('data/states.json');
 
 $statesArray = $states->getStates();
@@ -45,14 +49,14 @@ $valid = true;
 // Handle form submission for checkout
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Collect and sanitize user inputs
-    $name = htmlspecialchars($_POST['name']);
-    $address = htmlspecialchars($_POST['address']);
-    $email = htmlspecialchars($_POST['email']);
-    $mobile_number = htmlspecialchars($_POST['mobile_number']);
-    $city = htmlspecialchars($_POST['city']);
-    $province = htmlspecialchars($_POST['province']);
-    $country = htmlspecialchars($_POST['country']);
-    $pincode = htmlspecialchars($_POST['pincode']);
+    $name = $sanitize_input->sanitize_input($_POST['name']);
+    $address = $sanitize_input->sanitize_input($_POST['address']);
+    $email = $sanitize_input->sanitize_input($_POST['email']);
+    $mobile_number = $sanitize_input->sanitize_input($_POST['mobile_number']);
+    $city = $sanitize_input->sanitize_input($_POST['city']);
+    $province = $sanitize_input->sanitize_input($_POST['province']);
+    $country = $sanitize_input->sanitize_input($_POST['country']);
+    $pincode = $sanitize_input->sanitize_input($_POST['pincode']);
 
     // Validate inputs
     if (empty($name)) {
@@ -258,8 +262,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <select name="province" id="province" class="form-control form-control-lg <?php echo isset($errors['province']) ? 'is-invalid' : (isset($province) ? 'is-valid' : ''); ?>" value="<?php echo htmlspecialchars($province ?? ''); ?>" required>
                                     <option value="">Select Province</option>
                                     <?php
-                                    foreach ($statesArray as $state) {
-                                        echo "<option value=\"" . htmlspecialchars($state) . "\">" . htmlspecialchars($state) . "</option>";
+                                    foreach ($statesArray as $state) { 
+                                        $selected = ($state === $province) ? "selected" : "";
+                                        echo "<option value=\"" . htmlspecialchars($state) . "\" $selected>" . htmlspecialchars($state) . "</option>";
                                     }
                                     ?>
                                 </select>

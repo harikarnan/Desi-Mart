@@ -14,7 +14,9 @@ $db = (new Database())->getConnection();
 $product = new Product($db);
 
 // Fetch categories
-$query = "SELECT * FROM categories";
+$limit = 5;
+$query = "SELECT * FROM categories ORDER BY RAND()
+            LIMIT $limit";
 $stmt = $db->prepare($query);
 $stmt->execute();
 $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);

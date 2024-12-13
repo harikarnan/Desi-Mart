@@ -2,13 +2,18 @@
 session_start();
 require_once 'db.php';
 
+require 'classes/Sanitizer.php';
+
+
+$sanitize_input = new Sanitizer();
+
 // Initialize error messages
 $error = [];
 $valid = true;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = htmlspecialchars($_POST['email']);
-    $password = htmlspecialchars($_POST['password']);
+    $email = $sanitize_input->sanitize_input($_POST['email']);
+    $password = $sanitize_input->sanitize_input($_POST['password']);
 
     // Validate email format
     if (empty($email)) {

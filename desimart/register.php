@@ -1,17 +1,20 @@
 <?php
 session_start();
 require_once 'db.php';
+require 'classes/Sanitizer.php';
+
 
 $db = (new Database())->getConnection();
+$sanitize_input = new Sanitizer();
 
 // Initialize errors array
 $errors = [];
 $valid = true;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = htmlspecialchars($_POST['name']);
-    $email = htmlspecialchars($_POST['email']);
-    $password = htmlspecialchars($_POST['password']);
+    $name = $sanitize_input->sanitize_input($_POST['name']);
+    $email = $sanitize_input->sanitize_input($_POST['email']);
+    $password = $sanitize_input->sanitize_input($_POST['password']);
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT); // Securely hash the password
 
     // Name validation - Only alphabets (letters)

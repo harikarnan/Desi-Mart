@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+require 'classes/Sanitizer.php';
+
+$sanitize_input = new Sanitizer();
+
 // Retrieve cart from session
 $cart = $_SESSION['cart'] ?? [];
 $totalAmount = 0;
@@ -19,8 +23,8 @@ if (!empty($cart)) {
 
 // Handle form submission for quantity update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $product_id = htmlspecialchars($_POST['product_id']);
-    $quantity = (int)$_POST['quantity'];
+    $product_id = $sanitize_input->sanitize_input($_POST['product_id']);
+    $quantity = (int)$sanitize_input->sanitize_input($_POST['quantity']);
 
     // Ensure minimum quantity is 1
     $quantity = max(1, $quantity);
@@ -50,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php echo htmlspecialchars($_SESSION['alert']); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <?php unset($_SESSION['alert']); // Clear the alert after displaying ?>
+        <?php unset($_SESSION['alert']);?>
     <?php endif; ?>
 
     <?php if (empty($cart)): ?>
@@ -74,12 +78,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="d-flex align-items-center gap-2">
                                     <label for="quantity-<?php echo $product_id; ?>" class="form-label mb-0">Quantity:</label>
                                     <input 
-                                        type="number" 
+                                        type="text" 
                                         name="quantity" 
+                                        inputmode="numeric"
                                         id="quantity-<?php echo $product_id; ?>" 
                                         value="<?php echo htmlspecialchars($item['quantity']); ?>" 
                                         min="1" 
-                                        max="8" 
+                                        max="8"
+                                        maxlength="1"
                                         class="form-control flex-grow-1" 
                                         required>
                                     <button type="submit" class="btn btn-info btn-block">Update</button>
