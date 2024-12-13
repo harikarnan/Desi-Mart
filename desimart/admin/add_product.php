@@ -22,8 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Validate price (4 digit number)
-    if (!preg_match("/^\d{1,4}$/", $price)) {
-        $error = "Price must be a 4-digit number.";
+    if (!preg_match('/^\d{1,3}(\.\d{1,2})?$/', $price)) {
+        $error = "Invalid price format. Please enter a price up to two decimal places.";
+    }
+
+    // Validate price range (maximum 999.99)
+    if (floatval($price) > 999.99) {
+        $error = "Price cannot exceed 999.99.";
     }
 
     // Validate description (max 100 characters)
@@ -82,8 +87,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="mb-3">
             <label for="price" class="form-label fw-bold">Price</label>
-            <input type="text" name="price" id="price" class="form-control" placeholder="Enter product price" required maxlength="4"
-                pattern="^\d{1,4}$" title="Price must be a 4-digit number.">
+            <input type="text" name="price" id="price" class="form-control" placeholder="Enter product price" required maxlength="7"
+                pattern="^\d{1,3}(\.\d{1,2})?$"
+                title="Price must be a number with at most two decimal places and cannot exceed 999.99.">
         </div>
 
         <div class="mb-3">
