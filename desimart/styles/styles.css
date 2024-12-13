@@ -318,17 +318,25 @@ footer {
     gap: 1rem;
 }
 
+.button-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;    
+    margin-top: 1rem;      
+}
+
 .primary-btn {
     display: inline-block;
     background-color: var(--primary-cta-color);
     color: var(--white);
-    padding: 0.8rem 1.5rem;
+    padding: 0.5rem 1rem;
     border: none;
+    text-align: center;
     text-decoration: none;
     border-radius: 5px;
-    align-self: center;
     font-weight: 600;
 }
+
 
 .secondary-btn {
     background-color: var(--secondary-cta-bg-color);

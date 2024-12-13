@@ -59,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['toast'] = "Product added to cart successfully!";
 }
 
+
 // Fetch current quantity in the cart
 $current_quantity = $_SESSION['cart'][$product_id]['quantity'] ?? 0;
 
