@@ -79,7 +79,7 @@ $current_quantity = $_SESSION['cart'][$product_id]['quantity'] ?? 0;
                     <div class="toast-body">
                         <?php 
                             echo $_SESSION['toast']; 
-                            unset($_SESSION['toast']); // Clear the toast message after displaying
+                            unset($_SESSION['toast']); 
                         ?>
                     </div>
                 </div>
