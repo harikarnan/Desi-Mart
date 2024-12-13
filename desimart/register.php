@@ -126,9 +126,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="invalid-feedback"><?php echo $errors['password']; ?></div>
                 <?php endif; ?>
             </div>
-            <button type="submit" class="primary-btn">Register</button>
+            <button type="submit" class="mx-auto primary-btn">Register</button>
         </form>
-        <p>Already have an account? <a href="login.php">Login here</a>.</p>
+        <p class="pt-3">Already have an account? <a href="login.php">Login here</a>.</p>
     </div>
 </main>
 <?php include 'includes/footer.php'; ?>
