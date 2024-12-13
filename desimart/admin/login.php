@@ -1,5 +1,8 @@
 <?php
 require_once 'includes/db.php';
+require_once '../classes/Sanitizer.php';
+
+$sanitize_input = new Sanitizer();
 session_start();
 
 if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin') {
@@ -11,8 +14,8 @@ $error = [];
 $valid = true;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = htmlspecialchars($_POST['email']);
-    $password = htmlspecialchars($_POST['password']);
+    $email = $sanitize_input->sanitize_input($_POST['email']);
+    $password = $sanitize_input->sanitize_input($_POST['password']);
 
     // Validate email format
     if (empty($email)) {

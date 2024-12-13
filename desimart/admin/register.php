@@ -1,11 +1,15 @@
 <?php
 require_once 'includes/db.php';
+require_once '../classes/Sanitizer.php';
 session_start();
 
+
+$sanitize_input = new Sanitizer();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $name = $sanitize_input->sanitize_input($_POST['name']);
+    $email = $sanitize_input->sanitize_input($_POST['email']);
+    $password = password_hash($sanitize_input->sanitize_input($_POST['password']), PASSWORD_DEFAULT);
 
     // Insert the admin with role 'admin'
     $stmt = $db->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
