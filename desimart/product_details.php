@@ -55,6 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'products_image_path' => $product['products_image_path']
         ];
     }
+
+    $_SESSION['toast'] = "Product added to cart successfully!";
 }
 
 // Fetch current quantity in the cart
@@ -65,6 +67,24 @@ $current_quantity = $_SESSION['cart'][$product_id]['quantity'] ?? 0;
 <?php include 'includes/header.php'; ?>
 <main>
     <section class="container">
+
+    <?php if (isset($_SESSION['toast'])): ?>
+            <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 11;">
+                <div class="toast show bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <strong class="me-auto">Added!!!</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" onclick="this.parentElement.parentElement.style.display='none';"></button>
+                    </div>
+                    <div class="toast-body">
+                        <?php 
+                            echo $_SESSION['toast']; 
+                            unset($_SESSION['toast']); // Clear the toast message after displaying
+                        ?>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
         <div class="row align-items-center">
             <div class="col-md-3">
                 <img class="rounded w-100 rem-12" src="<?php echo htmlspecialchars($product['products_image_path']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
