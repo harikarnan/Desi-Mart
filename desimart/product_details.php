@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 // Redirect to login page if the user is not logged in
 if (!isset($_SESSION['user'])) {
     header('Location: login.php');
@@ -9,10 +10,14 @@ if (!isset($_SESSION['user'])) {
 
 require_once 'db.php';
 require_once 'classes/Product.php';
+require 'classes/Sanitizer.php';
+
 
 $db = (new Database())->getConnection();
 $product_id = $_GET['id'] ?? 0;
 $products = new Product($db);
+
+$sanitize_input = new Sanitizer();
 
 // Fetch product details
 $query = "SELECT product_id, name, description, price, products_image_path FROM products WHERE product_id = :id";
@@ -37,7 +42,7 @@ if (!isset($_SESSION['cart'])) {
 
 // Handle form submission to add/update cart
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
+    $quantity = isset($_POST['quantity']) ? (int)$sanitize_input->sanitize_input($_POST['quantity']) : 1;
     $quantity = max(1, min(8, $quantity)); // Ensure quantity is between 1 and 8
 
     if (isset($_SESSION['cart'][$product_id])) {
@@ -71,7 +76,7 @@ $current_quantity = $_SESSION['cart'][$product_id]['quantity'] ?? 0;
                 <form method="POST" class="mb-2">
                 <div class="d-flex align-items-center gap-2">
                     <label for="quantity" class="form-label mb-0">Quantity:</label>
-                    <input type="number" id="quantity" name="quantity" class="form-control w-50" value="<?php echo htmlspecialchars($current_quantity > 0 ? $current_quantity : 1); ?>" min="1" max="8">
+                    <input type="text" inputmode="numeric" id="quantity" name="quantity" class="form-control w-50" value="<?php echo htmlspecialchars($current_quantity > 0 ? $current_quantity : 1); ?>" min="1" max="8" maxlength="1">
                     <button type="submit" class="btn btn-info btn-block">Add to Cart</button>
                     </div>
                 </form>
